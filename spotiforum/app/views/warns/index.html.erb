@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Warns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Administrator</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @warns.each do |warn| %>
+      <tr>
+        <td><%= warn.user_id %></td>
+        <td><%= warn.administrator_id %></td>
+        <td><%= link_to 'Show', warn %></td>
+        <td><%= link_to 'Edit', edit_warn_path(warn) %></td>
+        <td><%= link_to 'Destroy', warn, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Warn', new_warn_path %>
