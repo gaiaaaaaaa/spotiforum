@@ -1,0 +1,27 @@
+<%= form_with(model: warn) do |form| %>
+  <% if warn.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(warn.errors.count, "error") %> prohibited this warn from being saved:</h2>
+
+      <ul>
+        <% warn.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :administrator_id %>
+    <%= form.number_field :administrator_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
