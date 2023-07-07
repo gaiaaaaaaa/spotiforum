@@ -8,10 +8,6 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :song
 
       t.timestamps
-
-      validates_uniqueness_of :name
-      validates_uniqueness_of :email
-      add_check_constraint "spotify_check", "!(spotify ==false and song!='')"
     end
   end
 end
