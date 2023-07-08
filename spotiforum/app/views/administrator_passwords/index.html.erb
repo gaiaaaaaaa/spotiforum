@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Administrator id</th>
       <th>Password</th>
       <th>Salt</th>
       <th colspan="3"></th>
@@ -14,6 +15,7 @@
   <tbody>
     <% @administrator_passwords.each do |administrator_password| %>
       <tr>
+        <td><%= administrator_password.administrator_id %></td>
         <td><%= administrator_password.password %></td>
         <td><%= administrator_password.salt %></td>
         <td><%= link_to 'Show', administrator_password %></td>
