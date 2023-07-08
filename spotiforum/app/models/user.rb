@@ -15,5 +15,4 @@ class User < ApplicationRecord
     has_many :comments
     has_one :warn
     has_one :user_password
-
 end
