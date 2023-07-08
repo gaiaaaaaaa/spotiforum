@@ -8,6 +8,7 @@ class UserPasswordsController < ApplicationController
 
   # GET /user_passwords/1 or /user_passwords/1.json
   def show
+    @user = UserPassword.find(params[:id])
   end
 
   # GET /user_passwords/new
@@ -65,6 +66,6 @@ class UserPasswordsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_password_params
-      params.require(:user_password).permit(:password, :salt)
+      params.require(:user_password).permit(:password, :salt, :user_id)
     end
 end

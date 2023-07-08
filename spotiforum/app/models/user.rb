@@ -10,4 +10,10 @@ class User < ApplicationRecord
     validates :name, presence: true, uniqueness: true
     validates :email, presence: true, uniqueness: true
     validates_with Vincolo
+    has_many :posts
+    has_many :likes
+    has_many :comments
+    has_one :warn
+    has_one :user_password
+
 end

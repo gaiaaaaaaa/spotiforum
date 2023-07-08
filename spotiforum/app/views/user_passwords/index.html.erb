@@ -7,15 +7,17 @@
     <tr>
       <th>Password</th>
       <th>Salt</th>
+      <th>User_id</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @user_passwords.each do |user_password| %>
-      <tr>
+        
         <td><%= user_password.password %></td>
         <td><%= user_password.salt %></td>
+        <td><%= user_password.user_id %></td>
         <td><%= link_to 'Show', user_password %></td>
         <td><%= link_to 'Edit', edit_user_password_path(user_password) %></td>
         <td><%= link_to 'Destroy', user_password, method: :delete, data: { confirm: 'Are you sure?' } %></td>

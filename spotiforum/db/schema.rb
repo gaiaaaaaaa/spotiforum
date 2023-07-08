@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_06_165110) do
+ActiveRecord::Schema.define(version: 2023_07_08_071719) do
 
   create_table "administrator_passwords", force: :cascade do |t|
     t.string "password"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2023_07_06_165110) do
     t.integer "salt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
