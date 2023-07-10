@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.email_field :email %>
   </div>
 
   <div class="field">
@@ -34,6 +34,21 @@
   <div class="field">
     <%= form.label :song %>
     <%= form.text_field :song %>
+  </div>
+
+  <div class="field">
+    <%= form.label :google %>
+    <%= form.check_box :google %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :salt %>
+    <%= form.number_field :salt %>
   </div>
 
   <div class="actions">

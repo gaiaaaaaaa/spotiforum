@@ -10,18 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_06_165112) do
-
-  create_table "administrator_passwords", force: :cascade do |t|
-    t.string "password"
-    t.integer "salt"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
+ActiveRecord::Schema.define(version: 2023_07_10_112555) do
 
   create_table "administrators", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.string "password"
+    t.integer "salt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -30,6 +25,13 @@ ActiveRecord::Schema.define(version: 2023_07_06_165112) do
     t.integer "user_id"
     t.integer "post_id"
     t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "favourites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -49,19 +51,16 @@ ActiveRecord::Schema.define(version: 2023_07_06_165112) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "user_passwords", force: :cascade do |t|
-    t.string "password"
-    t.integer "salt"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.integer "photo"
     t.boolean "spotify"
     t.string "song"
+    t.boolean "google"
+    t.string "password"
+    t.integer "salt"
+
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

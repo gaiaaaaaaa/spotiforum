@@ -10,5 +10,15 @@
   <%= @administrator.email %>
 </p>
 
+<p>
+  <strong>Email:</strong>
+  <%= @administrator.password %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @administrator.salt %>
+</p>
+
 <%= link_to 'Edit', edit_administrator_path(@administrator) %> |
 <%= link_to 'Back', administrators_path %>
