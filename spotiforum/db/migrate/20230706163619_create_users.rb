@@ -6,6 +6,9 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.integer :photo
       t.boolean :spotify
       t.string :song
+      t.boolean :google
+      t.string :password
+      t.integer :salt
 
       t.timestamps
     end
