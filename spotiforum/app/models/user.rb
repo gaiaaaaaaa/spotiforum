@@ -9,6 +9,7 @@ end
 class User < ApplicationRecord
     validates :name, presence: true, uniqueness: true
     validates :email, presence: true, uniqueness: true
+    validates :spotify, presence:true
     validates_with Vincolo1
     has_many :posts
     has_many :likes
