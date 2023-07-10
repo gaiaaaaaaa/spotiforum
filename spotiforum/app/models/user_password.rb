@@ -1,8 +1,10 @@
-class Vincolo < ActiveModel::Validator
+class Vincolo2 < ActiveModel::Validator
     def validate(record)
-        #TODO
-        if !(record.id != utentesempliceid or utentesempliceSpotify == false)
-            record.errors.add :base, "Non puoi scegliere una canzone preferita se non hai fatto login con Spotify!"
+        @users = User.all
+        @users.each do |user|
+            if (record.user_id == user.id and user.spotify == false)
+                record.errors.add :base, "Non puoi scegliere una password se hai già fatto login con Spotify!"
+            end
         end
     end
 end
@@ -10,5 +12,5 @@ end
 class UserPassword < ApplicationRecord
     belongs_to :user
     validates :user_id, presence: true, uniqueness: true 
-    validates_with Vincolo
+    validates_with Vincolo2
 end
