@@ -1,0 +1,17 @@
+class CreateUsers < ActiveRecord::Migration[6.1]
+  def change
+    create_table :users do |t|
+      t.string :name
+      t.string :email
+      t.integer :photo
+      t.boolean :spotify
+      t.string :song
+      
+      validates_uniqueness_of :name
+      validates_uniqueness_of :email
+      t.check_constraint "spotify_check", "!(spotify==false && song!='')"
+
+      t.timestamps
+    end
+  end
+end

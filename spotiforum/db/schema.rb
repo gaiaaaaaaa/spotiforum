@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 2023_07_10_112555) do
     t.boolean "google"
     t.string "password"
     t.integer "salt"
+
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
