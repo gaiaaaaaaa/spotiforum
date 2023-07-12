@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_10_112555) do
+ActiveRecord::Schema.define(version: 2023_07_12_090434) do
 
   create_table "administrators", force: :cascade do |t|
     t.string "name"
-    t.string "email"
-    t.string "password"
-    t.integer "salt"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_administrators_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
   end
 
   create_table "comments", force: :cascade do |t|
@@ -53,15 +55,17 @@ ActiveRecord::Schema.define(version: 2023_07_10_112555) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "email"
+    t.string "email", default: "", null: false
     t.integer "photo"
     t.boolean "spotify"
     t.string "song"
     t.boolean "google"
-    t.string "password"
-    t.integer "salt"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "encrypted_password", default: ""
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "warns", force: :cascade do |t|
