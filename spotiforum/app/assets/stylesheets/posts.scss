@@ -1,3 +1,76 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+body{
+    div{
+        .form-check{
+            margin-left: 0px;
+            margin-bottom: 10px;
+        }
+        label{
+            font-size: 18px;
+            margin-left: 3px;
+        }
+        .btn_submit{
+            margin-left: 15px;
+        }
+    }
+
+    .posts_container{
+        margin-top: 20px;
+        margin-left: 20px;
+        border-radius: 10px;
+        border: solid;
+        border-color: rgba(28, 126, 28, 0.479);
+        padding: 5px;
+        width: 50%;
+
+        .username{
+            font-weight: bold;
+        }
+
+        .content, .tags{
+            margin-left: 5px;
+        }
+
+        .tags{
+            color: rgb(57, 143, 201);
+        }
+
+        label{
+            width: 20px;
+        }
+
+        .row{
+            width: 600px;
+            margin-left: 40px;
+        }
+
+        .num_likes{
+            font-size: 15px;
+        }
+    }
+
+    .add_post{
+        margin-left: 20px;
+    }
+
+    .btn_for_user{
+        width: 20px;
+    }
+    .btn_for_user:hover{
+        background-color: white;
+    }
+
+    .buttonTo{
+        border: none;
+        background-color: transparent;
+        margin-left: -10px;
+    }
+
+    #drop{
+        margin-left: 10px;
+    }
+
+}

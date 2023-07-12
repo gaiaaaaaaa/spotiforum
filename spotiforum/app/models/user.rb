@@ -57,6 +57,7 @@ class User < ApplicationRecord
 
     validates :name, presence: true, uniqueness: true, length:{maximum:20, minimum:3}
     validates :email, presence: true, uniqueness: true, length:{maximum:50, minimum:6}, format:{with: URI::MailTo::EMAIL_REGEXP}
+    validates_confirmation_of :password
     validates_with VincoloSpotify
     validates_with VincoloGoogle
     validates_with VincoloCanzone
