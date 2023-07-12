@@ -10,8 +10,16 @@ end
 #se google = true allora spotify = false e password = ""
 class VincoloGoogle < ActiveModel::Validator
     def validate(record)
-        if !(record.google == false or (record.password == "" and record.spotify == false))
-            record.errors.add :base, "Utente Google non può avere password o Spotify!"
+        #if !(record.google == false or (record.password == "" and record.spotify == false))
+        #    record.errors.add :base, "Utente Google non può avere password e Spotify!"
+        #end
+        if (record.google == true)
+			if (record.spotify == true)
+				record.errors.add :base, "Google e Spotify insieme errore!"
+			end
+			if (record.password != "")
+				record.errors.add :base, "Google e Password insieme errore!"
+			end
         end
     end
 end
@@ -20,32 +28,43 @@ end
 class VincoloSpotify < ActiveModel::Validator
     def validate(record)
         if !(record.spotify == false or (record.password == "" and record.google == false))
-            record.errors.add :base, "Utente Spotify non può avere password o Google!"
+            record.errors.add :base, "Utente Spotify non può avere password e Google!"
         end
     end
 end
 
-#sale e password non possono essere vuoti
-class VincoloPassword < ActiveModel::Validator
-    def validate(record)
-        if ((record.password == "" and record.salt != nil) or (record.password != ""  and record.salt == nil))
-            record.errors.add :base, "Sale e Password non possono essere vuoti!"
-        end
-    end
+# Se Spotify = false e Google = false, allora Password != NULL
+class VincoloPswrd < ActiveModel::Validator
+	def validate(record)
+		if (record.google == false and record.spotify == false)
+			if (record.password == "")
+				record.errors.add :base, "Un Utente non Spotify e non Google deve avere la password!"
+			end
+		end
+	end
 end
 
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
     before_save {self.email = email.downcase}
+    
+    def password_required?
+		new_record? ? false : super
+	end
 
     validates :name, presence: true, uniqueness: true, length:{maximum:20, minimum:3}
     validates :email, presence: true, uniqueness: true, length:{maximum:50, minimum:6}, format:{with: URI::MailTo::EMAIL_REGEXP}
     validates_with VincoloSpotify
     validates_with VincoloGoogle
     validates_with VincoloCanzone
-    validates_with VincoloPassword
+    validates_with VincoloPswrd
     has_many :posts
     has_many :likes
     has_many :comments
     has_many :favourites
     has_one :warn
+    
 end
