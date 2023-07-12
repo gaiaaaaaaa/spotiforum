@@ -12,12 +12,7 @@
 
 <p>
   <strong>Email:</strong>
-  <%= @administrator.password %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @administrator.salt %>
+  <%= @administrator.password_digest %>
 </p>
 
 <%= link_to 'Edit', edit_administrator_path(@administrator) %> |

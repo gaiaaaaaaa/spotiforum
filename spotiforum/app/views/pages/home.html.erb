@@ -1,0 +1,12 @@
+<!-- <h1>Pages#home</h1>
+<p>Find me in app/views/pages/home.html.erb</p> -->
+
+<% if(user_signed_in?) %>
+
+	BENVENUTO/A
+	<%= current_user.name %>
+	<%= link_to 'sign_out', '/users/sign_out', :method=>:delete %>
+	
+	<%= link_to 'Area Personale', user_path(current_user.id) %>
+	
+<% end %>
