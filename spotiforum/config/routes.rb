@@ -4,12 +4,12 @@ Rails.application.routes.draw do
   get 'pages/community' => 'posts#index'
   post '/post/:id/like', to: 'posts#like', as: 'like'
   devise_for :administrators, controllers: {
-	sessions: 'administrators/sessions',
-	registrations: 'administrators/registrations'
+	  sessions: 'administrators/sessions',
+	  registrations: 'administrators/registrations'
   }
   devise_for :users, controllers: {
-	sessions: 'users/sessions',
-	registrations: 'users/registrations'
+	  sessions: 'users/sessions',
+	  registrations: 'users/registrations'
   }
   resources :favourites
   resources :comments
