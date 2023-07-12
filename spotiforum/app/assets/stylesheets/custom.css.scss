@@ -1,0 +1,28 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body{
+    padding: 0px;
+}
+
+
+nav ul li{
+    padding-right: 10px;
+    font-size: 17px;
+}
+
+nav form{
+    align-self: center;
+    .form-control{
+        font-size: 15px;
+    }
+    .btn-success{
+        font-size: 15px;
+    }
+}
+
+nav{
+    justify-content: center;
+}
+
+

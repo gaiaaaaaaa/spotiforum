@@ -3,7 +3,31 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    if (params[:sort_by] != nil)
+      case params[:sort_by]
+      when "created_at"
+        @posts = Post.all.order(:created_at)
+      when "created_at_desc"
+        @posts = Post.all.order(created_at: :desc)
+      when "likes"
+        @posts = Post.left_outer_joins(:likes) #con solo il join non mostra i post con 0 like
+                .group('posts.id')
+                .order('COUNT(likes.id) DESC')
+      end
+    else
+      @posts = Post.all
+    end
+    @likes = Like.all
+    @comments = Comment.all
+  end
+
+  def like
+    #trovo il post attraverso l'id passato come parametro
+    @post = Post.all.find(params[:id])
+    #creo il like con l'id del post e l'id dell'utente attualmente loggato
+    Like.create(user_id: current_user.id, post_id: @post.id)
+    redirect_to posts_path #?
+    #manca parte in cui ci si assicura che si possa mettere like una sola volta
   end
 
   # GET /posts/1 or /posts/1.json
