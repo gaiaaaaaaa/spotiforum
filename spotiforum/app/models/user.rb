@@ -17,17 +17,14 @@ class VincoloGoogle < ActiveModel::Validator
 			if (record.spotify == true)
 				record.errors.add :base, "Google e Spotify insieme errore!"
 			end
-			if (record.password != "")
-				record.errors.add :base, "Google e Password insieme errore!"
-			end
         end
     end
 end
 
-#se spotify = true allora google = false e password = ""
+#se spotify = true allora google = false
 class VincoloSpotify < ActiveModel::Validator
     def validate(record)
-        if !(record.spotify == false or (record.password == "" and record.google == false))
+        if !(record.spotify == false or record.google == false)
             record.errors.add :base, "Utente Spotify non può avere password e Google!"
         end
     end
@@ -46,9 +43,9 @@ end
 
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # :confirmable, :lockable, :timeoutable, :trackable and 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:spotify] 
     before_save {self.email = email.downcase}
     
     def password_required?
@@ -68,4 +65,22 @@ class User < ApplicationRecord
     has_many :favourites
     has_one :warn
     
+    def self.from_omniauth(access_token)
+        data = access_token.info
+        user = User.where(email: data['email']).first
+    
+        # Uncomment the section below if you want users to be created if they don't exist
+        unless user
+            user = User.create(email: data['email'],
+                name: data['name'],
+                password: Devise.friendly_token[0,20],
+                google: false,
+                spotify: true
+            )
+        end
+        user
+    end
+
+    
+
 end
