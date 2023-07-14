@@ -1,4 +1,4 @@
-<h2>Sign up</h2>
+<h2>Registrazione</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
@@ -16,21 +16,6 @@
   <div class="field">
     <%= f.label :photo %><br />
     <%= f.number_field :photo, autocomplete: 0 %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :spotify %><br />
-    <%= f.check_box :spotify %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :song %><br />
-    <%= f.text_field :song, autocomplete: "song" %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :google %><br />
-    <%= f.check_box :google %>
   </div>
 
   <div class="field">

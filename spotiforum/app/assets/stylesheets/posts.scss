@@ -70,7 +70,25 @@ body{
     }
 
     #drop{
+        margin-left: 5px;
+    }
+
+    .comments{
         margin-left: 10px;
+        margin-top: 5px;
+        padding: none;
+
+        .author_name{
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .comment_text{
+            margin-left: 5px;
+            margin-top: -1px;
+            font-size: 13px;
+        }
+
     }
 
 }
