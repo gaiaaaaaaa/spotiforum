@@ -1,7 +1,7 @@
 #se non autenticato con spotify, non puoi avere canzone preferita
 class VincoloCanzone < ActiveModel::Validator
     def validate(record)
-        if !(record.spotify == true or record.song == "")
+        if !(record.spotify == true or record.song == nil)
             record.errors.add :base, "Non puoi scegliere una canzone preferita se non hai fatto login con Spotify!"
         end
     end
@@ -10,15 +10,9 @@ end
 #se google = true allora spotify = false e password = ""
 class VincoloGoogle < ActiveModel::Validator
     def validate(record)
-        #if !(record.google == false or (record.password == "" and record.spotify == false))
-        #    record.errors.add :base, "Utente Google non può avere password e Spotify!"
-        #end
         if (record.google == true)
 			if (record.spotify == true)
 				record.errors.add :base, "Google e Spotify insieme errore!"
-			end
-			if (record.password != "")
-				record.errors.add :base, "Google e Password insieme errore!"
 			end
         end
     end
@@ -27,7 +21,7 @@ end
 #se spotify = true allora google = false e password = ""
 class VincoloSpotify < ActiveModel::Validator
     def validate(record)
-        if !(record.spotify == false or (record.password == "" and record.google == false))
+        if !(record.spotify == false or record.google == false)
             record.errors.add :base, "Utente Spotify non può avere password e Google!"
         end
     end
@@ -45,22 +39,40 @@ class VincoloPswrd < ActiveModel::Validator
 end
 
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-    before_save {self.email = email.downcase}
+    # Include default devise modules. Others available are:
+    # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :validatable,
+           :omniauthable, omniauth_providers: [:google_oauth2]
+      before_save {self.email = email.downcase}
+      
+      
+      def self.from_omniauth(access_token)
+          data = access_token.info
+          user = User.where(email: data['email']).first
+  
+          # Uncomment the section below if you want users to be created if they don't exist
+           unless user
+               user = User.create(name: data['name'],
+                  email: data['email'],
+                  password: Devise.friendly_token[0,20],
+                  google: true,
+                  spotify: false
+               )
+           end
+          user
+      end
     
     def password_required?
 		new_record? ? false : super
 	end
 
-    validates :name, presence: true, uniqueness: true, length:{maximum:20, minimum:3}
+    validates :name, presence: true, uniqueness: true, length:{maximum:40, minimum:3}
     validates :email, presence: true, uniqueness: true, length:{maximum:50, minimum:6}, format:{with: URI::MailTo::EMAIL_REGEXP}
     validates_confirmation_of :password
     validates_with VincoloSpotify
     validates_with VincoloGoogle
-    validates_with VincoloCanzone
+    #validates_with VincoloCanzone
     validates_with VincoloPswrd
     has_many :posts
     has_many :likes
