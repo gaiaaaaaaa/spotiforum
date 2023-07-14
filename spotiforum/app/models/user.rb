@@ -72,7 +72,7 @@ class User < ApplicationRecord
     validates_confirmation_of :password
     validates_with VincoloSpotify
     validates_with VincoloGoogle
-    #validates_with VincoloCanzone
+    validates_with VincoloCanzone
     validates_with VincoloPswrd
     has_many :posts
     has_many :likes

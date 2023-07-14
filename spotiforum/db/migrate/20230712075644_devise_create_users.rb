@@ -8,7 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.string :email,              null: false, default: ""
       t.integer :photo
       t.boolean :spotify
-      t.string :song
+      t.string :song				
       t.boolean :google
       t.string :encrypted_password, null: false, default: ""
 

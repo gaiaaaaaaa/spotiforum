@@ -9,15 +9,15 @@
   </div>
   <div class="form-check">
       <%= radio_button_tag :sort_by, 'created_at', params[:sort_by] == 'created_at' %>
-      <%= label_tag :sort_by_created_at, "Dal meno recente" %>
+      <%= label_tag :sort_by, "Dal meno recente" %>
   </div>
   <div class="form-check">
       <%= radio_button_tag :sort_by, 'likes', params[:sort_by] == 'likes' %>
-      <%= label_tag :sort_by_created_at, "Numero di Like" %>
+      <%= label_tag :sort_by, "Numero di Like" %>
   </div>
   <div class="form-check">
   <%= check_box_tag :filter_favourite, 1, params[:filter_favourite].present? %>
-      <%= label_tag :sort_by_created_at, "Preferiti" %>
+      <%= label_tag :filter, "Preferiti" %>
   </div>
       <%= submit_tag 'Ordina', class: 'btn btn-primary btn_submit' %>
 <% end %>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="col-sm-8">
-            <%= link_to root_path do %>
+            <%= button_to favourite_path(post.id), {:class => "buttonTo" }, method: "post" do %>
               <%= image_tag "favourite.svg", class: "btn_for_user" %>
             <% end %>
             </div>
@@ -86,9 +86,9 @@
       <div class="comments" style="display:none;">
             <% comments = @comments.where(post_id: post.id) %>
             <% comments.each do |comment| %>
-              <%= @user = User.find_by(id: comment.user_id) %>
-              <p><%= @user[:name] %></p>
-              <p><%= comment.text %></p>
+              <% @user = User.find_by(id: comment.user_id) %>
+              <p class="author_name"><%= @user[:name] %></p>
+              <p class="comment_text"><%= comment.content %></p>
             <% end %>
       
       </div>
@@ -104,6 +104,3 @@
   });
 </script>
 
-<br>
-
-<%= link_to 'New Post', new_post_path %>
