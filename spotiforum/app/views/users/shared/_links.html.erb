@@ -1,6 +1,4 @@
-<%- if controller_name != 'sessions' %>
-  Sei già registrato? Effettua il <%= link_to "Log in", new_session_path(resource_name) %><br />
-<% end %>
+
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
   <%= link_to "Sign up", new_registration_path(resource_name) %><br />
@@ -18,12 +16,20 @@
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end %>
 
+
+<div class="sign_in_buttons">
+</br>
+<%- if controller_name != 'sessions' %>
+  Sei già registrato? Effettua il <%= link_to "Log in", new_session_path(resource_name) %><br />
+<% end %>
+
 <%- if devise_mapping.omniauthable? %>
   <%= form_for "Login",
     url: omniauth_authorize_path(resource_name, 'google_oauth2'),
     method: :post,
     data: {turbo: "false"} do |f| %>
       <%= f.submit "Sign in with Google", type: "image", src: url_for("/assets/btn_google_signin_light_normal_web@2x.png"), class: "google_login" %><br/>
+  <% end %>
 
   <%= form_for "SpotifyLogin",
       url: omniauth_authorize_path(resource_name, 'spotify'),
@@ -32,3 +38,5 @@
         <%= f.submit "SpotifyLogin", type: "image", src: url_for("/assets/Spotify_Logo_CMYK_Green.png"), class: 'spotifyLogin'%>
       <% end %>
 <% end %>
+
+</div>
