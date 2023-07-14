@@ -47,7 +47,7 @@ class User < ApplicationRecord
       before_save {self.email = email.downcase}
       
       
-      def self.from_omniauth(access_token)
+      def self.from_omniauthGoogle(access_token)
           data = access_token.info
           user = User.where(email: data['email']).first
   
@@ -80,7 +80,7 @@ class User < ApplicationRecord
     has_many :favourites
     has_one :warn
     
-    def self.from_omniauth(access_token)
+    def self.from_omniauthSpotify(access_token)
         data = access_token.info
         user = User.where(email: data['email']).first
     

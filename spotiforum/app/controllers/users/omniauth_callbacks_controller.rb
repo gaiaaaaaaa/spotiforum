@@ -9,8 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # end
 
   def google_oauth2
-    #user = User.from_omniauth(auth)
-    @user = User.from_omniauth(request.env['omniauth.auth'])
+    @user = User.from_omniauthGoogle(request.env['omniauth.auth'])
     
     if @user.present?
       #sign_out_all_scopes
@@ -25,7 +24,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
   def spotify
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @user = User.from_omniauthSpotify(request.env["omniauth.auth"])
 
     if @user.persisted?
       set_flash_message(:notice, :success, kind: "Spotify") if is_navigational_format?
