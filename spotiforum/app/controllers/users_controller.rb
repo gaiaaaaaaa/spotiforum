@@ -88,7 +88,7 @@ class UsersController < ApplicationController
     RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
   
     user = RSpotify::User.new(session[:spotify_access_token])
-    top_artists = user.top_artists(limit: 1, time_range: 'medium_term')
+    top_artists = user.top_artists(limit: 1, time_range: 'short_term')
     most_listened_artist = top_artists.first
 
     most_listened_artist_name = most_listened_artist.name
