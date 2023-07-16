@@ -35,7 +35,10 @@
   <%= @user.password %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'sign_out', '/users/sign_out', :method=>:delete %>
+  
 <%= link_to 'Back', users_path %>
 
 <div class="text_container">

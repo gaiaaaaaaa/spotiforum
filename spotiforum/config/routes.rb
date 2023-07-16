@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post 'users/create_recommended_playlist', to: 'users#create_recommended_playlist'
   post 'users/create_your_own_playlist', to: 'users#create_your_own_playlist'
   get 'profiles/home'
+  post '/post/:id/favourite', to: 'posts#favourite', as: 'favourite'
   devise_for :administrators, controllers: {
 	  sessions: 'administrators/sessions',
 	  registrations: 'administrators/registrations'
