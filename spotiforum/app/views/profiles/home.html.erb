@@ -1,0 +1,36 @@
+<div class="text_container">
+  <h2> Statistiche di <%= current_user.name%></h2>
+  <h3> Canzone preferita</h3>
+  <p> <%= current_user.song %> </p>
+
+  <h3> Canzone più ascoltata del periodo</h3>
+  <p> <%= current_user.mostlistenedsong %> </p>
+
+  <h3> Artista più ascoltata del periodo</h3>
+  <p> <%= current_user.mostlistenedartist %> </p>
+
+  <h3> La playlist che ti abbiamo consigliato </h3>
+  <%RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a") 
+    user = RSpotify::User.find(current_user.name)  # Sostituisci 'username' con il nome utente Spotify desiderato
+    playlist_list = user.playlists
+
+    playlist_list.each do |playlist|
+      if playlist.name == "Spotiforum Recommended Playlist!"
+        @spotiforum = playlist
+      end
+    end
+
+    if @spotiforum != nil %>
+    <%  songs = @spotiforum.tracks%>
+
+    <%  songs.each do |song| %>
+    <%=  "Titolo: #{song.name}" %> <br> 
+    <%=  "Artista: #{song.artists[0].name}" %> <br>
+    <%=  "Album: #{song.album.name}" %> <br>
+    <%=  "Durata: #{song.duration_ms} ms" %> <br>
+      <br>
+    <%  end
+    else%>
+    <%= "Non hai ancora creato questa playlist"%>
+    <%end%>
+</div>
