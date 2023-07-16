@@ -5,7 +5,7 @@
 body{
     div{
         h1{
-            font-size: 50px;
+            font-size: 45px;
             margin-top: 20px;
             //color: white;
             font-weight: bold;
@@ -26,11 +26,13 @@ body{
 
         margin-left: -50px;
     }
-    /*
-    background-image: url("background.jpg");
-    background-size: 100%;
-    background-position-y: 60px;
-    background-repeat: no-repeat;
-    */
+    
+   c{
+       color: rgb(29, 185, 84);
+   } 
+
+   b{
+       font-size: 15px;
+   }
 
 }

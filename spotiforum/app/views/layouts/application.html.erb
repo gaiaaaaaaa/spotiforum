@@ -34,7 +34,11 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ">
         <li class="nav-item">
-          <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+          <% if user_signed_in? %>
+          <%= link_to "Area Personale", '/users/'+current_user.id.to_s, class: "nav-link" %>
+          <%else%>
+            <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+          <% end %>
         </li>		
         </ul>		  
       </div>
