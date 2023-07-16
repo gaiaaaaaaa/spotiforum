@@ -1,14 +1,17 @@
 <div class="text_container">
 
 <% if(user_signed_in?) %>
-
+  
 	<h1>Benvenuto/a su <c>Spoti</c>forum, <%= current_user.name %>!</h1>
 	</br>
 	<b><%= link_to 'Sign out', '/users/sign_out', :method=>:delete %></b>
 	</br>
 	<b><%= link_to 'Area Personale', user_path(current_user.id) %> </b>
+  </br>
+  <%= link_to 'Profilo', '/profiles/home' %>
 <% else %>
 	<h1>Benvenuto su Spotiforum!</h1>
+
 <% end %>
 
 <h2>Visita la sezione Community per conoscere l'opinione degli altri utenti su argomenti musicali di tendenza.</h2>
