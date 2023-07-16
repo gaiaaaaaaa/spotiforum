@@ -26,6 +26,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def spotify
     @user = User.from_omniauthSpotify(request.env["omniauth.auth"])
 
+    session[:spotify_access_token] = request.env['omniauth.auth']
+
     if @user.persisted?
       set_flash_message(:notice, :success, kind: "Spotify") if is_navigational_format?
       sign_in_and_redirect @user, event: :authentication
