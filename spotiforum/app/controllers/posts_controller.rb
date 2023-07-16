@@ -19,10 +19,9 @@ class PostsController < ApplicationController
                 .group('posts.id')
                 .order('COUNT(comments.id) DESC')
       end
-    
     end
-    if(params[:filter_favourite]!=nil)
-      base = base.joins(:favourites).where(favourites: {user_id: current_user})
+    if (params[:filter_favourite] != nil)
+		  base = base.joins(:favourites).where(favourites: {user_id: current_user.id})
     end
     @posts = base.all
     @likes = Like.all
@@ -45,6 +44,15 @@ class PostsController < ApplicationController
     Favourite.create(user_id: current_user.id, post_id: @post.id)
     redirect_to posts_path 
     #manca parte in cui ci si assicura che si possa mettere like una sola volta
+  end
+  
+  def favourite
+	#trovo il post attraverso l'id passato come parametro
+	@post = Post.all.find(params[:id])
+	#creo il favourite con l'id del post e l'id dell'utente attualmente loggato
+	Favourite.create(user_id: current_user.id, post_id: @post.id)
+	redirect_to posts_path
+	#manca parte in cui ci si assicura che si possa mettere like una sola volta
   end
 
   # GET /posts/1 or /posts/1.json

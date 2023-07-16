@@ -28,7 +28,7 @@
 
 
   <div class="add_post">
-  <%= link_to new_post_path do %>
+  <%= link_to new_post_path, id: "my-link" do %>
     <%= image_tag "add.svg", class: "btn_for_user" %>
   <% end %>
   </div>
@@ -59,9 +59,9 @@
                   <% end %>
               <%end%>
               <% if user_signed_in? %>
-                <%= button_to like_path(post.id), {:class => "buttonTo" }, method: "post" do %>
-                  <%= image_tag "like.svg", class: "btn_for_user" %>
-                <% end %>
+				<%= button_to like_path(post.id), { :id => "AddLike", :class => "buttonTo" }, method: "post" do %>
+				  <%= image_tag "like.svg", class: "btn_for_user" %>
+				<% end %>
               <!--  < else >
                <= link_to like_path(post.id), method: "post" do >
                 <= image_tag "liked.svg", class: "btn_for_user" >
