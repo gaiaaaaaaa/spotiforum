@@ -16,6 +16,10 @@
       <%= label_tag :sort_by, "Numero di Like" %>
   </div>
   <div class="form-check">
+      <%= radio_button_tag :sort_by, 'comments', params[:sort_by] == 'comments' %>
+      <%= label_tag :sort_by, "Numero di Commenti" %>
+  </div>
+  <div class="form-check">
   <%= check_box_tag :filter_favourite, 1, params[:filter_favourite].present? %>
       <%= label_tag :filter, "Preferiti" %>
   </div>

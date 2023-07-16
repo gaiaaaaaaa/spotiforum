@@ -3,20 +3,28 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
+    base = Post
     if (params[:sort_by] != nil)
       case params[:sort_by]
       when "created_at"
-        @posts = Post.all.order(:created_at)
+        base = base.order(:created_at)
       when "created_at_desc"
-        @posts = Post.all.order(created_at: :desc)
+        base = base.order(created_at: :desc)
       when "likes"
-        @posts = Post.left_outer_joins(:likes) #con solo il join non mostra i post con 0 like
+        base = base.left_outer_joins(:likes) #con solo il join non mostra i post con 0 like
                 .group('posts.id')
                 .order('COUNT(likes.id) DESC')
+      when "comments"
+        base = base.left_outer_joins(:comments) #con solo il join non mostra i post con 0 like
+                .group('posts.id')
+                .order('COUNT(comments.id) DESC')
       end
-    else
-      @posts = Post.all
+    
     end
+    if(params[:filter_favourite]!=nil)
+      base = base.joins(:favourites).where(favourites: {user_id: current_user})
+    end
+    @posts = base.all
     @likes = Like.all
     @comments = Comment.all
   end
@@ -26,7 +34,16 @@ class PostsController < ApplicationController
     @post = Post.all.find(params[:id])
     #creo il like con l'id del post e l'id dell'utente attualmente loggato
     Like.create(user_id: current_user.id, post_id: @post.id)
-    redirect_to posts_path #?
+    redirect_to posts_path 
+    #manca parte in cui ci si assicura che si possa mettere like una sola volta
+  end
+
+  def favourite
+    #trovo il post attraverso l'id passato come parametro
+    @post = Post.all.find(params[:id])
+    #creo il favourite con l'id del post e l'id dell'utente attualmente loggato
+    Favourite.create(user_id: current_user.id, post_id: @post.id)
+    redirect_to posts_path 
     #manca parte in cui ci si assicura che si possa mettere like una sola volta
   end
 

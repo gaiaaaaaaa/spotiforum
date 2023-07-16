@@ -1,18 +1,19 @@
 <div class="text_container">
-<h1>Benvenuto su Spotiforum!</h1>
 
 <% if(user_signed_in?) %>
 
-	<%= current_user.name %>
-	<%= link_to 'sign_out', '/users/sign_out', :method=>:delete %>
-	
-	<%= link_to 'Area Personale', user_path(current_user.id) %>
-	
+	<h1>Benvenuto/a su <c>Spoti</c>forum, <%= current_user.name %>!</h1>
+	</br>
+	<b><%= link_to 'Sign out', '/users/sign_out', :method=>:delete %></b>
+	</br>
+	<b><%= link_to 'Area Personale', user_path(current_user.id) %> </b>
+<% else %>
+	<h1>Benvenuto su Spotiforum!</h1>
 <% end %>
 
 <h2>Visita la sezione Community per conoscere l'opinione degli altri utenti su argomenti musicali di tendenza.</h2>
 
-<a class="btn btn-primary" href="pages/community" role="button">Visita la Community</a>
+<a class="btn btn-primary" href="/posts" role="button">Visita la Community</a>
 
 <h2>Non sei registrato? Effettua il log in per poter godere di tutti i vantaggi del nostro sito.
 Potrai pubblicare post, commentare e mettere like.</h2>
