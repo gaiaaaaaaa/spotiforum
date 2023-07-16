@@ -29,8 +29,7 @@
     method: :post,
     data: {turbo: "false"} do |f| %>
       <%= f.submit "Sign in with Google", type: "image", src: url_for("/assets/btn_google_signin_light_normal_web@2x.png"), class: "google_login" %><br/>
-  <% end %>
-
+    <% end %>
   <%= form_for "SpotifyLogin",
       url: omniauth_authorize_path(resource_name, 'spotify'),
       method: :post,
