@@ -24,10 +24,22 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
   def spotify
-    @user = User.from_omniauthSpotify(request.env["omniauth.auth"])
+    data = request.env["omniauth.auth"].info
+    user = User.where(email: data['email']).first
+
+    # Uncomment the section below if you want users to be created if they don't exist
+    unless user
+      user = User.create(email: data['email'],
+          name: data['nickname'],
+          password: Devise.friendly_token[0,20],
+          google: false,
+          spotify: true
+      )
+    end
+
+    @user = user
 
     session[:spotify_access_token] = request.env['omniauth.auth']
-
     if @user.persisted?
       set_flash_message(:notice, :success, kind: "Spotify") if is_navigational_format?
       sign_in_and_redirect @user, event: :authentication
