@@ -42,7 +42,6 @@
   <%= @user.password %>
 </p>
 
-
   <%= link_to 'Modifica profilo', edit_user_registration_path(@user) %> |
   <%= link_to 'Sign out', '/users/sign_out', :method=>:delete %> |
   <attention><%= link_to 'Cancella account', @user, method: :delete, data: { confirm: 'Are you sure?' } %> </attention> |
