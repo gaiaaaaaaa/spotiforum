@@ -46,23 +46,7 @@ class User < ApplicationRecord
            :omniauthable, omniauth_providers: %i[google_oauth2 spotify]
       has_one_attached :image
       before_save {self.email = email.downcase}
-      
-      
-      def self.from_omniauthGoogle(access_token)
-          data = access_token.info
-          user = User.where(email: data['email']).first
-  
-          # Uncomment the section below if you want users to be created if they don't exist
-           unless user
-               user = User.create(name: data['name'],
-                  email: data['email'],
-                  password: Devise.friendly_token[0,20],
-                  google: true,
-                  spotify: false
-               )
-           end
-          user
-      end
+
 
     def password_required?
 		new_record? ? false : super
@@ -80,21 +64,5 @@ class User < ApplicationRecord
     has_many :comments
     has_many :favourites
     has_one :warn
-    
-    def self.from_omniauthSpotify(access_token)
-        data = access_token.info
-        user = User.where(email: data['email']).first
-    
-        # Uncomment the section below if you want users to be created if they don't exist
-        unless user
-            user = User.create(email: data['email'],
-                name: data['name'],
-                password: Devise.friendly_token[0,20],
-                google: false,
-                spotify: true
-            )
-        end
-        user
-    end
 
 end

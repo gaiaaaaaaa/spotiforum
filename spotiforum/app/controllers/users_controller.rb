@@ -86,9 +86,15 @@ class UsersController < ApplicationController
   #scopri artista preferita dal periodo
   def user_artist
     RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
-  
-    user = RSpotify::User.new(session[:spotify_access_token])
-    top_artists = user.top_artists(limit: 1, time_range: 'short_term')
+    
+    #credential = {
+    #  client_id: 'd654966e96084bcdb7ec9a296fa0b0a1',
+    #  client_secret: 'f271efc1b16c404f9ee71c318baa581a'
+    #}
+
+    #user = RSpotify::User.new(credentials: credential, access_token: session[:spotify_access_token])
+    user_info = RSpotify::User.new(session[:spotify_access_token])
+    top_artists = user_info.top_artists
     most_listened_artist = top_artists.first
 
     most_listened_artist_name = most_listened_artist.name
@@ -104,7 +110,7 @@ class UsersController < ApplicationController
     RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
   
     user = RSpotify::User.new(session[:spotify_access_token])
-    top_tracks = user.top_tracks(limit: 1, time_range: 'medium_term')
+    top_tracks = user.top_tracks
     most_listened_song = top_tracks.first
 
     most_listened_song_name = most_listened_song.name
@@ -120,7 +126,7 @@ class UsersController < ApplicationController
     RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
   
     user = RSpotify::User.new(session[:spotify_access_token])
-    top_track = user.top_tracks(limit: 1, time_range: 'short_term')
+    top_track = user.top_tracks
     top_track_id = top_track.first.id
 
     favourite_track = RSpotify::Track.search(current_user.song, limit: 1).first
