@@ -14,8 +14,8 @@
   </div>
   
   <div class="field">
-    <%= f.label :photo %><br />
-    <%= f.number_field :photo, autocomplete: 0 %>
+    <%= f.label :image %><br />
+    <%= f.file_field :image %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

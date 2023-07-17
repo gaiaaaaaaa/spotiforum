@@ -44,6 +44,7 @@ class User < ApplicationRecord
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable,
            :omniauthable, omniauth_providers: %i[google_oauth2 spotify]
+      has_one_attached :image
       before_save {self.email = email.downcase}
 
 

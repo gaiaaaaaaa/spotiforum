@@ -36,7 +36,7 @@
   <% @posts.each do |post| %>
     <% @user = User.find_by(id: post.user_id) %>
     <div class="posts_container">
-      <h2 class="username"> <%= @user[:name] %> </h2>
+      <h2 class="username-comment"> <%= @user[:name] %> </h2>
       <h3 class="content"><%= post.content %></h3>
       <h4 class="tags"><%= post.tag %></h4>
 
@@ -59,9 +59,9 @@
                   <% end %>
               <%end%>
               <% if user_signed_in? %>
-				<%= button_to like_path(post.id), { :id => "AddLike", :class => "buttonTo" }, method: "post" do %>
-				  <%= image_tag "like.svg", class: "btn_for_user" %>
-				<% end %>
+        <%= button_to like_path(post.id), { :id => "AddLike", :class => "buttonTo" }, method: "post" do %>
+          <%= image_tag "like.svg", class: "btn_for_user" %>
+        <% end %>
               <!--  < else >
                <= link_to like_path(post.id), method: "post" do >
                 <= image_tag "liked.svg", class: "btn_for_user" >
@@ -107,4 +107,3 @@
     });
   });
 </script>
-
