@@ -24,7 +24,7 @@
 
   <h3> La playlist che ti abbiamo consigliato </h3>
   <%RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a") 
-    user = RSpotify::User.find(current_user.name)  # Sostituisci 'username' con il nome utente Spotify desiderato
+    user = RSpotify::User.find(session[:spotify_access_token]["uid"])  # Sostituisci 'username' con il nome utente Spotify desiderato
     playlist_list = user.playlists
 
     playlist_list.each do |playlist|
@@ -77,3 +77,4 @@
 
   </div>
 <%end%>
+

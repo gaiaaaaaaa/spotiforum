@@ -23,6 +23,9 @@ class PostsController < ApplicationController
     if (params[:filter_favourite] != nil)
 		  base = base.joins(:favourites).where(favourites: {user_id: current_user.id})
     end
+    if (params[:search_tag] != nil)
+		base = base.where("tag LIKE ?", "%##{params[:search_tag]}%")
+    end
     @posts = base.all
     @likes = Like.all
     @comments = Comment.all
