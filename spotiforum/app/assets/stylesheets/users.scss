@@ -1,3 +1,41 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+attention{
+    color: red;
+}
+
+.username{
+    font-size: 25px;
+    text-align: center;
+    display: block;
+    margin: auto;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.button-text{
+    display: flex;
+    margin-left: 5px;
+    margin-top: 20px;
+
+    h2{
+        margin-right: 5px;
+    }
+    .toggle-posts{
+        margin-top: 2px;
+    }
+
+    .toggle-favourites{
+        margin-top: 2px;
+    }
+}
+
+.favourites{
+    margin-left: 10px;
+}
+
+.posts{
+    margin-left: 10px;
+}

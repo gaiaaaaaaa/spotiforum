@@ -12,7 +12,8 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
-    @comment = Comment.new
+    @comment = Comment.new(user_id: current_user.id, post_id: params[:post_id])
+    #Assegno automaticamente il current_user come autore del post e l'id del post
   end
 
   # GET /comments/1/edit

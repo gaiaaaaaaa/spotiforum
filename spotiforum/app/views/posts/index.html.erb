@@ -50,22 +50,20 @@
 
               <!-- Rimanda al metodo like in PostController passandogli lid del post -->
 
-              
-              <!--  < if post.liked?(current_user) > -->
-
               <% if !user_signed_in? %>
                   <%= button_to like_path(post.id), {:class => "buttonTo" }, disabled: true, method: "put" do %>
                     <%= image_tag "like.svg", class: "btn_for_user" %>
                   <% end %>
-              <%end%>
-              <% if user_signed_in? %>
-        <%= button_to like_path(post.id), { :id => "AddLike", :class => "buttonTo" }, method: "post" do %>
-          <%= image_tag "like.svg", class: "btn_for_user" %>
-        <% end %>
-              <!--  < else >
-               <= link_to like_path(post.id), method: "post" do >
-                <= image_tag "liked.svg", class: "btn_for_user" >
-                < end > -->
+              <% else %>
+                  <% if !post.liked?(current_user) %>
+                    <%= button_to like_path(post.id), { :id => "AddLike", :class => "buttonTo" }, method: "post" do %>
+                      <%= image_tag "like.svg", class: "btn_for_user" %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to like_path(post.id), method: "post" do %>
+                      <%= image_tag "liked.svg", class: "btn_for_user" %>
+                    <% end %>
+                  <% end %>
               <%end%>
 
               
@@ -73,16 +71,28 @@
 
           <% if user_signed_in? %>
             <div class="col-sm-2">
-              <%= link_to new_comment_path do %>
+              <% puts post.id %>
+              <%= link_to new_comment_path(post_id: post.id) do %>
                 <%= image_tag "comment.svg", class: "btn_for_user" %>
               <% end %>
             </div>
 
-            <div class="col-sm-8">
+            <div class="col-sm-2">
             <%= button_to favourite_path(post.id), {:class => "buttonTo" }, method: "post" do %>
               <%= image_tag "favourite.svg", class: "btn_for_user" %>
             <% end %>
             </div>
+
+            <% if post.user_id == current_user.id %>
+
+              <div class="col-sm-2">
+                <%= button_to post, method: :delete, data: { confirm: 'Are you sure?' }, class: "buttonTo"  do %>
+                  <%= image_tag "delete.svg", class: "btn_for_user" %>
+                <% end %>
+              </div>
+
+            <% end %>
+
           <%end%>
         </div>
 
@@ -92,7 +102,12 @@
             <% comments.each do |comment| %>
               <% @user = User.find_by(id: comment.user_id) %>
               <p class="author_name"><%= @user[:name] %></p>
-              <p class="comment_text"><%= comment.content %></p>
+              <div class="button-text">
+                <p class="comment_text"><%= comment.content %></p>
+                <%= button_to comment, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-button"  do %>
+                  <%= image_tag "xmark.svg", class: "btn_for_user" %>
+                <% end %>
+              </div>
             <% end %>
       
       </div>
