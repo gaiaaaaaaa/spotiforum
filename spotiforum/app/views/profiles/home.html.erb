@@ -24,7 +24,7 @@
 
   <h3> La playlist che ti abbiamo consigliato </h3>
   <%RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a") 
-    user = RSpotify::User.find(current_user.name)  # Sostituisci 'username' con il nome utente Spotify desiderato
+    user = RSpotify::User.find(session[:spotify_access_token]["uid"])  # Sostituisci 'username' con il nome utente Spotify desiderato
     playlist_list = user.playlists
 
     playlist_list.each do |playlist|
@@ -57,5 +57,24 @@
     <h2 class="username-comment"> <%= current_user.name %> </h2>
     <h3 class="content"><%= post.content %></h3>
     <h4 class="tags"><%= post.tag %></h4>
+    <div class="row">
+
+      <div class="col-sm-2 num_likes">
+        <%= @likes.where(post_id: post.id).count %>
+      </div>
+
+      <div class="col-sm-2 likes">
+        <%= image_tag "like.svg", class: "btn_for_user" %>
+      </div>
+
+      <div class="col-sm-2 num_comments">
+        <%= @comments.where(post_id: post.id).count %>
+      </div>
+
+      <div class="col-sm-2">
+        <%= image_tag "comment.svg", class: "btn_for_user" %>
+      </div>
+
   </div>
 <%end%>
+
