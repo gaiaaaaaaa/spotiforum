@@ -11,6 +11,12 @@ class UsersController < ApplicationController
     if current_user.id != params[:id].to_i
       redirect_to root_path
     end
+    #rendo disponibili post, like e commenti alla view di show (area personale)
+    @posts = Post.all.where(user_id: current_user.id)
+    @post = Post.all
+    @favourite_posts = @post.joins(:favourites)
+	@likes = Like.all
+	@comments = Comment.all
   end
 
   # GET /users/new
@@ -177,6 +183,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :photo, :spotify, :song, :google, :password, :mostlistenedsong, :mostlistenedartist)
+      params.require(:user).permit(:name, :email, :photo, :image, :spotify, :song, :google, :password, :mostlistenedsong, :mostlistenedartist)
     end
 end

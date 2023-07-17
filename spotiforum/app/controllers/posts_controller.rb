@@ -23,6 +23,9 @@ class PostsController < ApplicationController
     if (params[:filter_favourite] != nil)
 		  base = base.joins(:favourites).where(favourites: {user_id: current_user.id})
     end
+    if (params[:search_tag] != nil)
+		base = base.where("tag LIKE ?", "%##{params[:search_tag]}%")
+    end
     @posts = base.all
     @likes = Like.all
     @comments = Comment.all
@@ -46,14 +49,6 @@ class PostsController < ApplicationController
     #manca parte in cui ci si assicura che si possa mettere like una sola volta
   end
   
-  def favourite
-	#trovo il post attraverso l'id passato come parametro
-	@post = Post.all.find(params[:id])
-	#creo il favourite con l'id del post e l'id dell'utente attualmente loggato
-	Favourite.create(user_id: current_user.id, post_id: @post.id)
-	redirect_to posts_path
-	#manca parte in cui ci si assicura che si possa mettere like una sola volta
-  end
 
   # GET /posts/1 or /posts/1.json
   def show
@@ -62,6 +57,8 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    #Assegno automaticamente il current_user come autore del post
+    #@post = current_user.posts.build
   end
 
   # GET /posts/1/edit
@@ -71,6 +68,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save

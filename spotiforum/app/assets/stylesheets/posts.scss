@@ -26,7 +26,7 @@ body{
         padding: 5px;
         width: 50%;
 
-        .username{
+        .username-comment{
             font-weight: bold;
         }
 
@@ -48,6 +48,10 @@ body{
         }
 
         .num_likes{
+            font-size: 15px;
+        }
+
+        .num_comments{
             font-size: 15px;
         }
     }
@@ -87,6 +91,18 @@ body{
             margin-left: 5px;
             margin-top: -1px;
             font-size: 13px;
+        }
+
+        .button-text{
+            margin-top: -2px;
+            display: flex;
+        }
+
+        .delete-button{
+            margin-left: 8px;
+            border: none;
+            background-color: transparent;
+            margin-top: -6px;
         }
 
     }

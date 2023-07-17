@@ -1,5 +1,12 @@
 <p id="notice"><%= notice %></p>
 
+
+<% if current_user.image.attached? %>
+  <%= image_tag(current_user.image, class: 'profile-image') %>
+<% else %>
+  <%= image_tag "user.svg", class: "profile-default" %>
+<% end %>
+
 <p>
   <strong>Name:</strong>
   <%= @user.name %>
@@ -35,57 +42,161 @@
   <%= @user.password %>
 </p>
 
+  <%= link_to 'Modifica profilo', edit_user_registration_path(@user) %> |
+  <%= link_to 'Sign out', '/users/sign_out', :method=>:delete %> |
+  <attention><%= link_to 'Cancella account', @user, method: :delete, data: { confirm: 'Are you sure?' } %> </attention> |
+  <%= link_to 'Back', users_path %>
 
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-  <%= link_to 'sign_out', '/users/sign_out', :method=>:delete %>
-  
-<%= link_to 'Back', users_path %>
+  </br>
 
-<div class="text_container">
-  <h2>Aggiorna le tue statistiche spotify</h2>
-  <h3>Scegli la tua canzone preferita</h3>
-  <%= form_tag('search' , method: :post) do %>
-    <%= label_tag :search_query, "Immetti una canzone:" %>
-    <%= text_field_tag :search_query %>
-    <%= submit_tag "Modifica" %>
-  <% end %>
+<% if current_user.spotify == true %>
 
-  <h4>Risultato della ricerca</h4>
-  <p>Nome della canzone: <%= session[:canzone] %></p>
-
-  <h3>Scopri l'artista che hai ascoltato di più</h3>
-  <%= form_tag('user_artist' , method: :post) do %>
-    <%= csrf_meta_tags %>
-    <%= label_tag :search_query, "Clicca qui per scoprire l'artista:" %>
-    <%= submit_tag "Scopri" %>
-  <% end %>
-
-  <h4>Risultato della ricerca</h4>
-  <p>Nome dell'artista: <%= session[:artista] %></p>
-
-  <h3>Scopri la canzone che hai ascoltato di più ultimamente</h3>
-  <%= form_tag('user_song' , method: :post) do %>
-    <%= csrf_meta_tags %>
-    <%= label_tag :search_query, "Clicca qui per scoprire la canzone:" %>
-    <%= submit_tag "Scopri" %>
-  <% end %>
-
-  <h4>Risultato della ricerca</h4>
-  <p>Nome dell'artista: <%= session[:fcanzone] %></p>
-
-  <h3>Playlist pensata per te</h3>
-  <%= form_tag('create_recommended_playlist' , method: :post) do %>
-    <%= label_tag :search_query, "Crea playlist:" %>
-    <%= submit_tag "Crea" %>
-  <% end %>
-
-  <h3>Crea la tua playlist!</h3>
-  <%= form_tag('create_your_own_playlist', method: :post) do %>
-    <% (1..5).each do |i| %>
-      <%= label_tag "search_query#{i}", "Canzone#{i}:" %>
-      <%= text_field_tag "search_query#{i}" %>
-      </br>
+  <div class="text_container">
+    <h2>Aggiorna le tue statistiche spotify</h2>
+    <h3>Scegli la tua canzone preferita</h3>
+    <%= form_tag('search' , method: :post) do %>
+      <%= label_tag :search_query, "Immetti una canzone:" %>
+      <%= text_field_tag :search_query %>
+      <%= submit_tag "Modifica" %>
     <% end %>
-    <%= submit_tag "Cerca" %>
-  <% end %>
+
+    <h4>Risultato della ricerca</h4>
+    <p>Nome della canzone: <%= session[:canzone] %></p>
+
+    <h3>Scopri l'artista che hai ascoltato di più</h3>
+    <%= form_tag('user_artist' , method: :post) do %>
+      <%= csrf_meta_tags %>
+      <%= label_tag :search_query, "Clicca qui per scoprire l'artista:" %>
+      <%= submit_tag "Scopri" %>
+    <% end %>
+
+    <h4>Risultato della ricerca</h4>
+    <p>Nome dell'artista: <%= session[:artista] %></p>
+
+    <h3>Scopri la canzone che hai ascoltato di più ultimamente</h3>
+    <%= form_tag('user_song' , method: :post) do %>
+      <%= csrf_meta_tags %>
+      <%= label_tag :search_query, "Clicca qui per scoprire la canzone:" %>
+      <%= submit_tag "Scopri" %>
+    <% end %>
+
+    <h4>Risultato della ricerca</h4>
+    <p>Nome dell'artista: <%= session[:fcanzone] %></p>
+
+    <h3>Playlist pensata per te</h3>
+    <%= form_tag('create_recommended_playlist' , method: :post) do %>
+      <%= label_tag :search_query, "Crea playlist:" %>
+      <%= submit_tag "Crea" %>
+    <% end %>
+
+    <h3>Crea la tua playlist!</h3>
+    <%= form_tag('create_your_own_playlist', method: :post) do %>
+      <% (1..5).each do |i| %>
+        <%= label_tag "search_query#{i}", "Canzone#{i}:" %>
+        <%= text_field_tag "search_query#{i}" %>
+        </br>
+      <% end %>
+      <%= submit_tag "Cerca" %>
+    <% end %>
+  </div>
+
+<% end %>
+
+
+<div class="button-text">
+  <h2>I tuoi post</h2>
+  <div class="toggle-posts" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div>
 </div>
+<div class="posts" style="display:none;">
+  <% @posts.each do |post| %>
+    <div class="posts_container">
+      <h2 class="username-comment"> <%= current_user.name %> </h2>
+      <h3 class="content"><%= post.content %></h3>
+      <h4 class="tags"><%= post.tag %></h4>
+      <div class="row">
+
+        <div class="col-sm-2 num_likes">
+          <%= @likes.where(post_id: post.id).count %>
+        </div>
+
+        <div class="col-sm-2 likes">
+          <%= image_tag "like.svg", class: "btn_for_user" %>
+        </div>
+
+        <div class="col-sm-2 num_comments">
+          <%= @comments.where(post_id: post.id).count %>
+        </div>
+
+        <div class="col-sm-2">
+          <%= image_tag "comment.svg", class: "btn_for_user" %>
+        </div>
+
+        <div class="col-sm-2">
+          <%= button_to post, method: :delete, data: { confirm: 'Are you sure?' }, class: "buttonTo"  do %>
+            <%= image_tag "delete.svg", class: "btn_for_user" %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  <%end%>
+</div>
+
+<br>
+<br>
+
+<div class="button-text">
+  <h2>I tuoi post preferiti</h2>
+  <div class="toggle-favourites" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div>
+</div>
+<div class="favourites" style="display:none;">
+<% @favourite_posts.each do |favourite| %>
+  <% @user = User.find_by(id: favourite.user_id) %>
+  <div class="posts_container">
+    <h2 class="username-comment"> <%= @user[:name] %> </h2>
+    <h3 class="content"><%= favourite.content %></h3>
+    <h4 class="tags"><%= favourite.tag %></h4>
+    <div class="row">
+
+      <div class="col-sm-2 num_likes">
+        <%= @likes.where(post_id: favourite.id).count %>
+      </div>
+
+      <div class="col-sm-2 likes">
+        <%= image_tag "like.svg", class: "btn_for_user" %>
+      </div>
+
+      <div class="col-sm-2 num_comments">
+        <%= @comments.where(post_id: favourite.id).count %>
+      </div>
+
+      <div class="col-sm-2">
+        <%= image_tag "comment.svg", class: "btn_for_user" %>
+      </div>
+
+      <div class="col-sm-2">
+        <% fav = Favourite.where(post_id: favourite.id, user_id: current_user.id).first %>
+        <%= button_to destroy_favourite_path(id: fav.id), method: :delete, data: { confirm: "Sei sicuro di voler rimuovere il post dai preferiti?"}, class: "buttonTo" do %>
+          <%= image_tag "delete.svg", class: "btn_for_user" %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+<%end%>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.toggle-posts').click(function(){
+      $(this).closest('.button-text').next('.posts').toggle();
+    });
+
+    $('.toggle-favourites').click(function(){
+      $(this).closest('.button-text').next('.favourites').toggle();
+    });
+  });
+</script>
+
