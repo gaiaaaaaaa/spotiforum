@@ -11,6 +11,12 @@ class UsersController < ApplicationController
     if current_user.id != params[:id].to_i
       redirect_to root_path
     end
+    #rendo disponibili post, like e commenti alla view di show (area personale)
+    @posts = Post.all.where(user_id: current_user.id)
+    @post = Post.all
+    @favourite_posts = @post.joins(:favourites)
+	@likes = Like.all
+	@comments = Comment.all
   end
 
   # GET /users/new
@@ -86,8 +92,12 @@ class UsersController < ApplicationController
   #scopri artista preferita dal periodo
   def user_artist
     RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
+    
+    puts "PRIMA DELLA FUNZIONE"
+    puts session['devise.spotify_data']
+    #session['devise.spotify_data'] = '123'
   
-    user = RSpotify::User.new(session[:spotify_access_token])
+    user = RSpotify::User.new(session[:spotify_token])
     top_artists = user.top_artists(limit: 1, time_range: 'medium_term')
     most_listened_artist = top_artists.first
 
@@ -171,6 +181,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :photo, :spotify, :song, :google, :password, :mostlistenedsong, :mostlistenedartist)
+      params.require(:user).permit(:name, :email, :photo, :image, :spotify, :song, :google, :password, :mostlistenedsong, :mostlistenedartist)
     end
 end

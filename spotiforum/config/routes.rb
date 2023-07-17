@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post 'users/create_your_own_playlist', to: 'users#create_your_own_playlist'
   get 'profiles/home'
   post '/post/:id/favourite', to: 'posts#favourite', as: 'favourite'
+  delete '/favourite', to: 'favourites#destroy', as: :destroy_favourite
   devise_for :administrators, controllers: {
 	  sessions: 'administrators/sessions',
 	  registrations: 'administrators/registrations'
@@ -22,7 +23,9 @@ Rails.application.routes.draw do
   resources :favourites
   resources :comments
   resources :likes
-  resources :posts
+  resources :posts do
+	resources :comments, only: [:new, :create]
+  end
   resources :warns
   resources :administrators
   resources :users

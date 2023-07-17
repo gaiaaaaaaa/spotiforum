@@ -1,3 +1,16 @@
+<% if current_user.image.attached? %>
+  <%= image_tag(current_user.image, class: 'profile-image') %>
+<% else %>
+<%= image_tag "user.svg", class: "profile-default" %>
+<% end %>
+
+<div class="username">
+  <%= current_user.name %>
+</div>
+
+
+<% if current_user.spotify ==true %>
+
 <div class="text_container">
   <h2> Statistiche di <%= current_user.name%></h2>
   <h3> Canzone preferita</h3>
@@ -34,3 +47,33 @@
     <%= "Non hai ancora creato questa playlist"%>
     <%end%>
 </div>
+
+<%end %>
+
+<h2> I post di <%= current_user.name %>: </h2>
+
+<% @posts.each do |post| %>
+  <div class="posts_container">
+    <h2 class="username-comment"> <%= current_user.name %> </h2>
+    <h3 class="content"><%= post.content %></h3>
+    <h4 class="tags"><%= post.tag %></h4>
+    <div class="row">
+
+      <div class="col-sm-2 num_likes">
+        <%= @likes.where(post_id: post.id).count %>
+      </div>
+
+      <div class="col-sm-2 likes">
+        <%= image_tag "like.svg", class: "btn_for_user" %>
+      </div>
+
+      <div class="col-sm-2 num_comments">
+        <%= @comments.where(post_id: post.id).count %>
+      </div>
+
+      <div class="col-sm-2">
+        <%= image_tag "comment.svg", class: "btn_for_user" %>
+      </div>
+
+  </div>
+<%end%>

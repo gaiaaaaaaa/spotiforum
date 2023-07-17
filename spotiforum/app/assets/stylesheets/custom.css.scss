@@ -43,3 +43,16 @@ nav{
 .btn-success .btn{
     color: rgb(29, 185, 84);
 }
+
+.profile-image{
+    height: 150px;
+    clip-path: circle();
+    margin: auto;
+    display: block;
+}
+
+.profile-default{
+    height: 150px;
+    margin: auto;
+    display: block;
+}

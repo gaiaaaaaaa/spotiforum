@@ -6,4 +6,9 @@ class Post < ApplicationRecord
     validates :content, presence:true
     validates :user_id, presence:true
     validates :tag, presence:true
+    
+    def liked?(current_user)
+		likes.exists?(user_id: current_user.id)
+	end
+  
 end

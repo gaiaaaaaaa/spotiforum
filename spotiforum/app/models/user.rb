@@ -44,6 +44,7 @@ class User < ApplicationRecord
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable,
            :omniauthable, omniauth_providers: %i[google_oauth2 spotify]
+    has_one_attached :image
       before_save {self.email = email.downcase}
       
       
@@ -67,7 +68,7 @@ class User < ApplicationRecord
 		new_record? ? false : super
 	end
 
-    validates :name, presence: true, uniqueness: true, length:{maximum:40, minimum:3}
+    validates :name, presence: true, uniqueness: true, length:{maximum:50, minimum:3}
     validates :email, presence: true, uniqueness: true, length:{maximum:50, minimum:6}, format:{with: URI::MailTo::EMAIL_REGEXP}
     validates_confirmation_of :password
     validates_with VincoloSpotify
@@ -80,20 +81,6 @@ class User < ApplicationRecord
     has_many :favourites
     has_one :warn
     
-    def self.from_omniauthSpotify(access_token)
-        data = access_token.info
-        user = User.where(email: data['email']).first
     
-        # Uncomment the section below if you want users to be created if they don't exist
-        unless user
-            user = User.create(email: data['email'],
-                name: data['name'],
-                password: Devise.friendly_token[0,20],
-                google: false,
-                spotify: true
-            )
-        end
-        user
-    end
 
 end
