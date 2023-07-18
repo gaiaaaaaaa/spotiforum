@@ -14,7 +14,8 @@ class UsersController < ApplicationController
     #rendo disponibili post, like e commenti alla view di show (area personale)
     @posts = Post.all.where(user_id: current_user.id)
     @post = Post.all
-    @favourite_posts = @post.joins(:favourites)
+    @favourite = Favourite.all.where(user_id: current_user.id)
+    @favourite_posts = @post.joins(:favourites).where(favourites:{user_id: current_user.id})
 	@likes = Like.all
 	@comments = Comment.all
   end
