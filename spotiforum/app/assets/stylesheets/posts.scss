@@ -26,9 +26,42 @@ body{
         padding: 5px;
         width: 50%;
 
-        .username-comment{
-            font-weight: bold;
+        .user-identity{
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 10px;
+            margin-left: 4px;
+            height: 55px;
+
+            .username-comment{
+                font-weight: bold;
+                border: none;
+                background-color: transparent;
+                margin-top: 0;
+                margin-bottom: 0;
+                font-size: 18px;
+            }
+
+            .profile-image{
+                width: 45px;
+                margin-right: 10px;
+                margin-left: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            .profile-default{
+                width: 35px;
+                margin-right: 10px;
+                margin-left: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
         }
+
 
         .content, .tags{
             margin-left: 5px;
