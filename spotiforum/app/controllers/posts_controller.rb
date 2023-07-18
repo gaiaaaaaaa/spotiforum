@@ -74,7 +74,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-	redirect_to root_path
+	if !current_user.is_admin?
+		redirect_to root_path
+	end
   end
 
   # POST /posts or /posts.json

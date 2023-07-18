@@ -11,10 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
+  <% if current_user.id == post.user_id || post.user_id == nil %>
+	  <div class="field">
+		<%= form.label :content %>
+		<%= form.text_area :content %>
+	  </div>
+  <% end %>
 
   <!-- TOLTO PER ASSEGNARE AUTOMATICAMENTE L'AUTORE (CURRENT USER)
   <div class="field">

@@ -43,6 +43,9 @@
           <%= image_tag "user.svg", class: "profile-default" %>
         <% end %>
         <%= button_to @user[:name], profile_home_path, method: :post, params: {id: @user[:id]}, class: "username-comment" %> 
+		<% if current_user.is_admin? %>
+			<td><%= link_to 'Edit Tags', edit_post_path(post.id) %></td>
+		<% end %>
       </div>
       <h3 class="content"><%= post.content %></h3>
       <h4 class="tags"><%= post.tag %></h4>
