@@ -1,26 +1,27 @@
-<% if current_user.image.attached? %>
-  <%= image_tag(current_user.image, class: 'profile-image') %>
+
+<% if @user.image.attached? %>
+  <%= image_tag(@user.image, class: 'profile-image') %>
 <% else %>
 <%= image_tag "user.svg", class: "profile-default" %>
 <% end %>
 
 <div class="username">
-  <%= current_user.name %>
+  <%= @user.name %>
 </div>
 
 
-<% if current_user.spotify ==true %>
+<% if @user.spotify ==true %>
 
 <div class="text_container">
-  <h2> Statistiche di <%= current_user.name%></h2>
+  <h2> Statistiche di <%= @user.name%></h2>
   <h3> Canzone preferita</h3>
-  <p> <%= current_user.song %> </p>
+  <p> <%= @user.song %> </p>
 
   <h3> Canzone più ascoltata del periodo</h3>
-  <p> <%= current_user.mostlistenedsong %> </p>
+  <p> <%= @user.mostlistenedsong %> </p>
 
   <h3> Artista più ascoltata del periodo</h3>
-  <p> <%= current_user.mostlistenedartist %> </p>
+  <p> <%= @user.mostlistenedartist %> </p>
 
   <h3> La playlist che ti abbiamo consigliato </h3>
   <%RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a") 
@@ -50,11 +51,11 @@
 
 <%end %>
 
-<h2> I post di <%= current_user.name %>: </h2>
+<h2> I post di <%= @user.name %>: </h2>
 
 <% @posts.each do |post| %>
   <div class="posts_container">
-    <h2 class="username-comment"> <%= current_user.name %> </h2>
+    <h2 class="username-comment"> <%= @user.name %> </h2>
     <h3 class="content"><%= post.content %></h3>
     <h4 class="tags"><%= post.tag %></h4>
     <div class="row">
