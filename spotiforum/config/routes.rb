@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post 'users/user_song', to: 'users#user_song'
   post 'users/create_recommended_playlist', to: 'users#create_recommended_playlist'
   post 'users/create_your_own_playlist', to: 'users#create_your_own_playlist'
-  get 'profiles/home'
+  post 'profiles/home', to: 'profiles#home', as: 'profile_home'
   post '/post/:id/favourite', to: 'posts#favourite', as: 'favourite'
   delete '/favourite', to: 'favourites#destroy', as: :destroy_favourite
   devise_for :administrators, controllers: {
