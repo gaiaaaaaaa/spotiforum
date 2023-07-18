@@ -66,7 +66,8 @@ class User < ApplicationRecord
 
 
     def password_required?
-		new_record? ? false : super
+		#new_record? ? false : super
+		super && !spotify && !google
 	end
 
     validates :name, presence: true, uniqueness: true, length:{maximum:50, minimum:3}

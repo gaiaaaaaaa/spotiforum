@@ -30,7 +30,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Uncomment the section below if you want users to be created if they don't exist
     unless user
       user = User.create(email: data['email'],
-          name: data['nickname'],
+          name: data['name'],
           password: Devise.friendly_token[0,20],
           google: false,
           spotify: true

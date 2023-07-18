@@ -32,12 +32,14 @@ class PostsController < ApplicationController
   end
 
   def like
-    #trovo il post attraverso l'id passato come parametro
-    @post = Post.all.find(params[:id])
-    #creo il like con l'id del post e l'id dell'utente attualmente loggato
-    Like.create(user_id: current_user.id, post_id: @post.id)
-    redirect_to posts_path 
-    #manca parte in cui ci si assicura che si possa mettere like una sola volta
+    if user_signed_in?
+      #trovo il post attraverso l'id passato come parametro
+      @post = Post.all.find(params[:id])
+      #creo il like con l'id del post e l'id dell'utente attualmente loggato
+      Like.create(user_id: current_user.id, post_id: @post.id)
+      redirect_to posts_path 
+      #manca parte in cui ci si assicura che si possa mettere like una sola volta
+    end
   end
 
   def favourite
@@ -72,7 +74,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
+        format.html { redirect_to '/pages/community', notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -99,12 +101,29 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      #determino il path di destinazione in base all'indirizzo sorgente
+      redirect_path = determine_redirect_path(request.referer)
+      format.html { redirect_to redirect_path, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
+  #funzione per determinare il path
+  def determine_redirect_path(referer)
+    if referer.present? 
+      if referer.include?('users')
+        return user_path(current_user.id)
+      elsif referer.include?('/pages/community') or referer.include?('posts')
+        return '/pages/community'
+      else
+        return root_path
+      end
+    else
+      return root_path
+    end
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
