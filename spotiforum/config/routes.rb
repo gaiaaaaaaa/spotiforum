@@ -11,10 +11,6 @@ Rails.application.routes.draw do
   post 'profiles/home', to: 'profiles#home', as: 'profile_home'
   post '/post/:id/favourite', to: 'posts#favourite', as: 'favourite'
   delete '/favourite', to: 'favourites#destroy', as: :destroy_favourite
-  devise_for :administrators, controllers: {
-	  sessions: 'administrators/sessions',
-	  registrations: 'administrators/registrations'
-  }
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
 	  sessions: 'users/sessions',
@@ -27,7 +23,6 @@ Rails.application.routes.draw do
 	resources :comments, only: [:new, :create]
   end
   resources :warns
-  resources :administrators
   resources :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
