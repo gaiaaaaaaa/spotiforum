@@ -22,7 +22,7 @@ end
 class VincoloSpotify < ActiveModel::Validator
     def validate(record)
         if !(record.spotify == false or record.google == false)
-            record.errors.add :base, "Utente Spotify non può avere password e Google!"
+            record.errors.add :base, "Utente Spotify non può avere Google!"
         end
     end
 end
@@ -34,6 +34,17 @@ class VincoloPswrd < ActiveModel::Validator
 			if (record.password == "")
 				record.errors.add :base, "Un Utente non Spotify e non Google deve avere la password!"
 			end
+		end
+	end
+end
+
+class VincoloAdmin < ActiveModel::Validator
+	def validate(record)
+		if (record.admin ==true and record.google == true)
+			record.errors.add :base, "Un amministratore non può accedere tramite google!"
+		end
+		if (record.admin ==true and record.spotify == true)
+			record.errors.add :base, "Un amministratore non può accedere tramite spotify!"
 		end
 	end
 end
@@ -69,6 +80,10 @@ class User < ApplicationRecord
 		#new_record? ? false : super
 		super && !spotify && !google
 	end
+	
+	def is_admin?
+		admin
+	end
 
     validates :name, presence: true, uniqueness: true, length:{maximum:50, minimum:3}
     validates :email, presence: true, uniqueness: true, length:{maximum:50, minimum:6}, format:{with: URI::MailTo::EMAIL_REGEXP}
@@ -77,6 +92,7 @@ class User < ApplicationRecord
     validates_with VincoloGoogle
     validates_with VincoloCanzone
     validates_with VincoloPswrd
+    validates_with VincoloAdmin
     has_many :posts
     has_many :likes
     has_many :comments

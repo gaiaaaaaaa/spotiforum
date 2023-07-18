@@ -33,79 +33,101 @@ class PostsController < ApplicationController
 
   def like
     if user_signed_in?
-      #trovo il post attraverso l'id passato come parametro
-      @post = Post.all.find(params[:id])
-      #creo il like con l'id del post e l'id dell'utente attualmente loggato
-      Like.create(user_id: current_user.id, post_id: @post.id)
-      redirect_to posts_path 
-      #manca parte in cui ci si assicura che si possa mettere like una sola volta
+		#trovo il post attraverso l'id passato come parametro
+		@post = Post.all.find(params[:id])
+		#creo il like con l'id del post e l'id dell'utente attualmente loggato
+		Like.create(user_id: current_user.id, post_id: @post.id)
+		redirect_to posts_path 
+		#manca parte in cui ci si assicura che si possa mettere like una sola volta
+    else
+		redirect_to root_path
     end
   end
 
   def favourite
-    #trovo il post attraverso l'id passato come parametro
-    @post = Post.all.find(params[:id])
-    #creo il favourite con l'id del post e l'id dell'utente attualmente loggato
-    Favourite.create(user_id: current_user.id, post_id: @post.id)
-    redirect_to posts_path 
-    #manca parte in cui ci si assicura che si possa mettere like una sola volta
+	if user_signed_in?
+		#trovo il post attraverso l'id passato come parametro
+		@post = Post.all.find(params[:id])
+		#creo il favourite con l'id del post e l'id dell'utente attualmente loggato
+		Favourite.create(user_id: current_user.id, post_id: @post.id)
+		redirect_to posts_path 
+		#manca parte in cui ci si assicura che si possa mettere like una sola volta
+	else
+		redirect_to root_path
+	end
   end
   
 
   # GET /posts/1 or /posts/1.json
   def show
+	redirect_to root_path
   end
 
   # GET /posts/new
   def new
-    @post = Post.new
-    #Assegno automaticamente il current_user come autore del post
-    #@post = current_user.posts.build
+	if user_signed_in?
+		@post = Post.new
+	else
+		redirect_to root_path
+	end
   end
 
   # GET /posts/1/edit
   def edit
+	redirect_to root_path
   end
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
-    @post.user = current_user
+	if user_signed_in?
+		@post = Post.new(post_params)
+		@post.user = current_user
 
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to '/pages/community', notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
-    end
+		respond_to do |format|
+		  if @post.save
+			format.html { redirect_to '/pages/community', notice: "Post was successfully created." }
+			format.json { render :show, status: :created, location: @post }
+		  else
+			format.html { render :new, status: :unprocessable_entity }
+			format.json { render json: @post.errors, status: :unprocessable_entity }
+		  end
+		end
+	else
+		redirect_to root_path
+	end
   end
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @post }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
-    end
+	if user_signed_in?
+		respond_to do |format|
+		  if @post.update(post_params)
+			format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+			format.json { render :show, status: :ok, location: @post }
+		  else
+			format.html { render :edit, status: :unprocessable_entity }
+			format.json { render json: @post.errors, status: :unprocessable_entity }
+		  end
+		end
+	else
+		redirect_to root_path
+	end
   end
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-    @post.destroy
+	if user_signed_in?
+		@post.destroy
 
-    respond_to do |format|
-      #determino il path di destinazione in base all'indirizzo sorgente
-      redirect_path = determine_redirect_path(request.referer)
-      format.html { redirect_to redirect_path, notice: "Post was successfully destroyed." }
-      format.json { head :no_content }
-    end
+		respond_to do |format|
+		  #determino il path di destinazione in base all'indirizzo sorgente
+		  redirect_path = determine_redirect_path(request.referer)
+		  format.html { redirect_to redirect_path, notice: "Post was successfully destroyed." }
+		  format.json { head :no_content }
+		end
+	else
+		redirect_to root_path
+	end
   end
 
   private
