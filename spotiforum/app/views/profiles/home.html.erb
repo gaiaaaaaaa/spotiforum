@@ -10,9 +10,12 @@
 
 
 <% if current_user.spotify ==true %>
-
-<div class="text_container">
-  <h2> Statistiche di <%= current_user.name%></h2>
+  <div class='row'>
+    <h2> Statistiche di <%= current_user.name%></h2> 
+    <div class="toggle-playlist" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div> 
+  </div>
+  <div id="playlist">
+  
   <h3> Canzone preferita</h3>
   <p> <%= current_user.song %> </p>
 
@@ -78,3 +81,11 @@
   </div>
 <%end%>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('#drop').click(function(){
+      $('#playlist').toggle();
+    });
+  });
+</script>
