@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "User was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -72,21 +72,26 @@ class UsersController < ApplicationController
 
     query = params[:search_query]
 
-    # Cerca una canzone
-    track = RSpotify::Track.search(query, limit: 1).first
-
-    if track
-      @nome_canzone = track.name + " by " + track.artists.first.name
-      if user_signed_in?
-        current_user.update(song: @nome_canzone)
-      end 
+    if query == ""
+      redirect_to user_path(current_user.id)
     else
-      @nome_canzone = "Nessuna canzone trovata."
+
+      # Cerca una canzone
+      track = RSpotify::Track.search(query, limit: 1).first
+
+      if track
+        @nome_canzone = track.name + " by " + track.artists.first.name
+        if user_signed_in?
+          current_user.update(song: @nome_canzone)
+        end 
+      else
+        @nome_canzone = "Nessuna canzone trovata."
+      end
+      puts @nome_canzone
+      #flash[@nome_canzone]
+      session[:canzone] = @nome_canzone
+      redirect_to user_path(current_user.id)
     end
-    puts @nome_canzone
-    #flash[@nome_canzone]
-    session[:canzone] = @nome_canzone
-    redirect_to user_path(current_user.id)
   end
 
   #scopri artista preferita dal periodo
