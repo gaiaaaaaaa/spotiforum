@@ -8,7 +8,8 @@
 	</br>
 	<b><%= link_to 'Area Personale', user_path(current_user.id) %> </b>
   </br>
-  <%= link_to 'Profilo', '/profiles/home' %>
+  <%= button_to "Profilo", profile_home_path, method: :post, params: {id: current_user.id}%> 
+
 <% else %>
 	<h1>Benvenuto su Spotiforum!</h1>
 

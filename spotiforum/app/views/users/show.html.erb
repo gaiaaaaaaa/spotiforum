@@ -156,7 +156,14 @@
 <% @favourite_posts.each do |favourite| %>
   <% @user = User.find_by(id: favourite.user_id) %>
   <div class="posts_container">
-    <h2 class="username-comment"> <%= @user[:name] %> </h2>
+    <div class="user-identity">
+      <% if @user.image.attached? %>
+        <%= image_tag(@user.image, class: 'profile-image') %>
+      <% else %>
+        <%= image_tag "user.svg", class: "profile-default" %>
+      <% end %>
+      <%= button_to @user[:name], profile_home_path, method: :post, params: {id: @user[:id]}, class: "username-comment" %> 
+    </div>
     <h3 class="content"><%= favourite.content %></h3>
     <h4 class="tags"><%= favourite.tag %></h4>
     <div class="row">
