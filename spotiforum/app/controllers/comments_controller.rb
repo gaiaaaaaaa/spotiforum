@@ -4,15 +4,17 @@ class CommentsController < ApplicationController
   # GET /comments or /comments.json
   def index
     @comments = Comment.all
+    redirect_to posts_path
   end
 
   # GET /comments/1 or /comments/1.json
   def show
+	redirect_to posts_path
   end
 
   # GET /comments/new
   def new
-    if user_signed_in? and !current_user.is_admin?
+    if user_signed_in? and !current_user.is_admin? and params[:post_id]
       @comment = Comment.new(user_id: current_user.id, post_id: params[:post_id])
       #Assegno automaticamente il current_user come autore del post e l'id del post
     else
@@ -22,6 +24,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+	redirect_to posts_path
   end
 
   # POST /comments or /comments.json
