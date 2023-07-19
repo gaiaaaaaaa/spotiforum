@@ -43,7 +43,7 @@
         <% end %>
         <%= button_to @user[:name], profile_home_path, method: :post, params: {id: @user[:id]}, class: "username-comment" %> 
 
-		<% if current_user.is_admin? %>
+		<% if user_signed_in? or current_user.is_admin? %>
 			<td><%= link_to 'Edit Tags', edit_post_path(post.id) %></td>
 		<% end %>
         
