@@ -26,12 +26,12 @@
       <%= submit_tag 'Ordina', class: 'btn btn-primary btn_submit' %>
 <% end %>
 
-  <% if user_signed_in? and !user.is_admin? &>
-	  <div class="add_post">
-	  <%= link_to new_post_path, id: "my-link" do %>
-		<%= image_tag "add.svg", class: "btn_for_user" %>
-	  <% end %>
-	  </div>
+  <% if user_signed_in? and !current_user.is_admin? %>
+    <div class="add_post">
+    <%= link_to new_post_path, id: "my-link" do %>
+      <%= image_tag "add.svg", class: "btn_for_user" %>
+    <% end %>
+    </div>
   <% end %>
 
   <% @posts.each do |post| %>
@@ -63,17 +63,16 @@
 
               <!-- Rimanda al metodo like in PostController passandogli lid del post -->
 
-              <% if !user_signed_in? %>
-                  <%= button_to like_path(post.id), {:class => "buttonTo" }, disabled: true, method: "put" do %>
-                    <%= image_tag "like.svg", class: "btn_for_user" %>
-                  <% end %>
+              <% if !user_signed_in? or (user_signed_in? and current_user.is_admin?)%>
+                 <%= image_tag "like.svg", class: "btn_for_user" %>
               <% else %>
                   <% if !post.liked?(current_user) %>
                     <%= button_to like_path(post.id), { :id => "AddLike", :class => "buttonTo" }, method: "post" do %>
                       <%= image_tag "like.svg", class: "btn_for_user" %>
                     <% end %>
                   <% else %>
-                    <%= link_to like_path(post.id), method: "post" do %>
+                    <% like = Like.where(user_id: current_user.id.to_i, post_id: post.id).first %>
+                    <%= button_to destroy_like_path(id: like.id), method: :delete, class: "buttonTo" do %>
                       <%= image_tag "liked.svg", class: "btn_for_user" %>
                     <% end %>
                   <% end %>
@@ -83,18 +82,44 @@
             </div>
 
           <% if user_signed_in? %>
+
+            <div class="col-sm-2 num_likes">
+              <%= @comments.where(post_id: post.id).count %>
+            </div>
+              
             <div class="col-sm-2">
-              <% puts post.id %>
               <%= link_to new_comment_path(post_id: post.id) do %>
                 <%= image_tag "comment.svg", class: "btn_for_user" %>
               <% end %>
             </div>
 
-            <div class="col-sm-2">
-            <%= button_to favourite_path(post.id), {:class => "buttonTo" }, method: "post" do %>
-              <%= image_tag "favourite.svg", class: "btn_for_user" %>
+            <% if !post.favourited?(current_user) %>
+              <div class="col-sm-2">
+                <%= button_to favourite_path(post.id), class: "buttonTo", method: "post" do %>
+                  <%= image_tag "favourite.svg", class: "btn_for_user" %>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="col-sm-2">
+                <% fav = Favourite.where(user_id: current_user.id.to_i, post_id: post.id).first %>
+                <%= button_to destroy_favourite_path(id: fav.id), method: :delete, class: "buttonTo" do %>
+                  <%= image_tag "favourited.svg", class: "btn_for_user" %>
+                <% end %>
+              </div>
             <% end %>
+
+          <% else %>
+
+            <div class="col-sm-2 num_likes">
+              <%= @comments.where(post_id: post.id).count %>
             </div>
+              <div class="col-sm-2">
+                <%= image_tag "comment.svg", class: "btn_for_user" %>
+              </div>
+
+          <% end %>
+
+          <% if user_signed_in? %>
 
             <% if post.user_id == current_user.id or current_user.is_admin?%>
 
