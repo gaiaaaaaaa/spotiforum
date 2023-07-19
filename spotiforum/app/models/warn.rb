@@ -1,10 +1,11 @@
 class VincoloAmministratore < ActiveModel::Validator
     def validate(record)
-        if (record.user_id != record.administrator_id )
+        if (record.user_id == record.administrator_id )
             record.errors.add :base, "L'amministratore non può ammonirsi da solo"
         end
-        @user = User.all.find(record.administrator_id).first
+        @user = User.all.find(record.administrator_id)
         if !@user.admin
+			puts "NON è UN UTENTE"
 			record.errors.add :base, "Un utente non può ammonire un altro utente"
         end
     end

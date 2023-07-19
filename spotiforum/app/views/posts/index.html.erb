@@ -26,7 +26,6 @@
       <%= submit_tag 'Ordina', class: 'btn btn-primary btn_submit' %>
 <% end %>
 
-
   <div class="add_post">
   <%= link_to new_post_path, id: "my-link" do %>
     <%= image_tag "add.svg", class: "btn_for_user" %>
@@ -43,9 +42,11 @@
           <%= image_tag "user.svg", class: "profile-default" %>
         <% end %>
         <%= button_to @user[:name], profile_home_path, method: :post, params: {id: @user[:id]}, class: "username-comment" %> 
+
 		<% if current_user.is_admin? %>
 			<td><%= link_to 'Edit Tags', edit_post_path(post.id) %></td>
 		<% end %>
+        
       </div>
       <h3 class="content"><%= post.content %></h3>
       <h4 class="tags"><%= post.tag %></h4>
@@ -93,7 +94,7 @@
             <% end %>
             </div>
 
-            <% if post.user_id == current_user.id %>
+            <% if post.user_id == current_user.id or current_user.is_admin?%>
 
               <div class="col-sm-2">
                 <%= button_to post, method: :delete, data: { confirm: 'Are you sure?' }, class: "buttonTo"  do %>
@@ -111,11 +112,13 @@
             <% comments = @comments.where(post_id: post.id) %>
             <% comments.each do |comment| %>
               <% @user = User.find_by(id: comment.user_id) %>
-              <p class="author_name"><%= @user[:name] %></p>
+              <%= button_to @user[:name], profile_home_path, method: :post, params: {id: @user[:id]}, class: "username-comment" %> 
               <div class="button-text">
                 <p class="comment_text"><%= comment.content %></p>
-                <%= button_to comment, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-button"  do %>
-                  <%= image_tag "xmark.svg", class: "btn_for_user" %>
+                <%if user_signed_in? and (comment.user_id == current_user.id or current_user.is_admin?) %>
+                  <%= button_to comment, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-button"  do %>
+                    <%= image_tag "xmark.svg", class: "btn_for_user" %>
+                  <% end %>
                 <% end %>
               </div>
             <% end %>

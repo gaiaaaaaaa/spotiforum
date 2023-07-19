@@ -12,8 +12,12 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
-    @comment = Comment.new(user_id: current_user.id, post_id: params[:post_id])
-    #Assegno automaticamente il current_user come autore del post e l'id del post
+    if user_signed_in? and !current_user.is_admin?
+      @comment = Comment.new(user_id: current_user.id, post_id: params[:post_id])
+      #Assegno automaticamente il current_user come autore del post e l'id del post
+    else
+      redirect_to '/pages/community'
+    end
   end
 
   # GET /comments/1/edit
@@ -50,11 +54,13 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    @comment.destroy
+    if user_signed_in? or (user_signed_in? and current_user.is_admin?)
+      @comment.destroy
 
-    respond_to do |format|
-      format.html { redirect_to '/pages/community', notice: "Comment was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to '/pages/community', notice: "Comment was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 

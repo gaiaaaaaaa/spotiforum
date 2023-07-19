@@ -49,6 +49,17 @@ class VincoloAdmin < ActiveModel::Validator
 	end
 end
 
+class VincoloBlacklist < ActiveModel::Validator
+    def validate(record)
+        @blacklisted = Blacklist.all
+        @blacklisted.each do |blacklisted|
+            if (record.email == blacklisted.email)
+                record.errors.add :base, "L'utente è bannato e non può registrarsi!"
+            end
+        end
+    end
+end
+
 class User < ApplicationRecord
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -93,10 +104,11 @@ class User < ApplicationRecord
     validates_with VincoloCanzone
     validates_with VincoloPswrd
     validates_with VincoloAdmin
-    has_many :posts
-    has_many :likes
-    has_many :comments
-    has_many :favourites
-    has_one :warn
+    validates_with VincoloBlacklist
+    has_many :posts, dependent: :destroy
+    has_many :likes, dependent: :destroy
+    has_many :comments, dependent: :destroy
+    has_many :favourites, dependent: :destroy
+    has_one :warn, dependent: :destroy
 
 end

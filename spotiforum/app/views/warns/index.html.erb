@@ -14,11 +14,13 @@
   <tbody>
     <% @warns.each do |warn| %>
       <tr>
-        <td><%= warn.user_id %></td>
-        <td><%= warn.administrator_id %></td>
+        <% user = User.all.find(warn.user_id) %>
+        <% admin = User.all.find(warn.administrator_id) %>
+        <td><%= user.name %></td>
+        <td><%= admin.name %></td>
         <td><%= link_to 'Show', warn %></td>
         <td><%= link_to 'Edit', edit_warn_path(warn) %></td>
-        <td><%= link_to 'Destroy', warn, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Rimuovi ammonizione', destroy_warn_path(id: warn.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
