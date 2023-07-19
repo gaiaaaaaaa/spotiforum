@@ -3,7 +3,11 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
+	if user_signed_in? and current_user.is_admin?
+		@users = User.all
+	else
+		redirect_to root_path
+	end
   end
 
   # GET /users/1 or /users/1.json
@@ -23,11 +27,12 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    redirect_to new_user_registration_path
   end
 
   # GET /users/1/edit
   def edit
-	if current_user.id != params[:id].to_i
+	if !user_signed_in? and current_user.id != params[:id].to_i
 		redirect_to root_path
 	end
   end
@@ -64,12 +69,14 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-	if current_user.id == params[:id].to_i or (current_user.is_admin? and !@user.is_admin?)
-		@user.destroy
+	if user_signed_in?
+		if current_user.id == params[:id].to_i or (current_user.is_admin? and !@user.is_admin?)
+			@user.destroy
 
-		respond_to do |format|
-		  format.html { redirect_to root_path, notice: "User was successfully destroyed." }
-		  format.json { head :no_content }
+			respond_to do |format|
+			  format.html { redirect_to root_path, notice: "User was successfully destroyed." }
+			  format.json { head :no_content }
+			end
 		end
 	end
   end

@@ -1,14 +1,26 @@
 <div class="text_container">
 
 <% if(user_signed_in?) %>
-  
+  <% if !current_user.is_admin? %>
 	<h1>Benvenuto/a su <c>Spoti</c>forum, <%= current_user.name %>!</h1>
 	</br>
-	<b><%= link_to 'Sign out', '/users/sign_out', :method=>:delete %></b>
+  <%else %>
+  	<h1>Benvenuto/a su <c>Spoti</c>forum, <%= current_user.name %>!</h1>
+  	</br>
+	<h2>Visualizza tutti gli utenti</h2>
+  	<b><%= link_to 'Lista Utenti', users_path %> </b>
 	</br>
-	<b><%= link_to 'Area Personale', user_path(current_user.id) %> </b>
-  </br>
-  <%= button_to "Profilo", profile_home_path, method: :post, params: {id: current_user.id}%> 
+	</br>
+	<h2>Visualizza tutti gli utenti ammoniti</h2>
+	<b><%= link_to 'Lista Ammoniti', warns_path %> </b>
+	</br>
+	</br>
+	<h2>Visualizza tutti gli utenti bannati</h2>
+	<b><%= link_to 'Lista Bannati', blacklists_path %> </b>
+	</br>
+	</br>
+	</br>
+  <% end %>
 
 <% else %>
 	<h1>Benvenuto su Spotiforum!</h1>
@@ -19,10 +31,23 @@
 
 <a class="btn btn-primary" href="/pages/community" role="button">Visita la Community</a>
 
-<h2>Non sei registrato? Effettua il log in per poter godere di tutti i vantaggi del nostro sito.
-Potrai pubblicare post, commentare e mettere like.</h2>
+<% if !user_signed_in? %>
+	<h2>Non sei registrato? Effettua il log in per poter godere di tutti i vantaggi del nostro sito.
+	Potrai pubblicare post, commentare e mettere like.</h2>
 
-<a class="btn btn-primary" href="users/sign_up" role="button">Registrati</a>
+	<a class="btn btn-primary" href="users/sign_up" role="button">Registrati</a>
+<% end %>
+
+<% if user_signed_in? and !current_user.is_admin? %>
+	<h2>Visita il tuo profilo per sapere cosa vedono gli altri di te.</h2>
+	<%= button_to "Profilo", profile_home_path, method: :post, params: {id: current_user.id}, class: "btn btn-primary" %> 
+<% end %>
+<% if user_signed_in? %>
+	</br>
+	<b><%= link_to 'Sign out', '/users/sign_out', :method=>:delete %></b>
+<% end %>
+
+
 </div>
 
 
