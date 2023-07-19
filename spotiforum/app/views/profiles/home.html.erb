@@ -9,6 +9,15 @@
   <%= @user.name %>
 </div>
 
+<% if user_signed_in? and current_user.is_admin? %>
+  <%= button_to warn_path(@user.id), {:class => "buttonTo" }, method: "post" do %>
+    <%= image_tag "warn.svg", class: "warn-button" %>
+  <%end%>
+  <%= button_to ban_path(@user.id), {:class => "buttonTo" }, method: "post" do %>
+    <%= image_tag "ban.svg", class: "ban-button" %>
+  <%end%>
+<% end %>
+
 
 <% if @user.spotify ==true %>
   <div class='row'>

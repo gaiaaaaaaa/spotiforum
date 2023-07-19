@@ -18,5 +18,10 @@ class Post < ApplicationRecord
     def liked?(current_user)
 		  likes.exists?(user_id: current_user.id)
 	  end
+	  
+	 def user_warned?
+		user = User.find(user_id)
+		user.warn.present?
+	 end
     
 end

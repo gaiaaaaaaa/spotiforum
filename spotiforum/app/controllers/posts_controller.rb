@@ -26,7 +26,10 @@ class PostsController < ApplicationController
     if (params[:search_tag] != nil)
 		base = base.where("tag LIKE ?", "%##{params[:search_tag]}%")
     end
-    @posts = base.all
+    warned = Warn.pluck(:user_id)
+    warned_posts = base.includes(:user).where(user_id: warned)
+    not_warned_posts = base.includes(:user).where.not(user_id: warned)
+    @posts = not_warned_posts + warned_posts
     @likes = Like.all
     @comments = Comment.all
   end
@@ -53,7 +56,30 @@ class PostsController < ApplicationController
 		redirect_to posts_path 
 		#manca parte in cui ci si assicura che si possa mettere like una sola volta
 	else
-		redirect_to root_path
+		redirect_to posts_path
+	end
+  end
+  
+  def warn
+	if user_signed_in? and current_user.is_admin?
+		@user = User.all.find(params[:id])
+		Warn.create(user_id: @user.id, administrator_id: current_user.id)
+		redirect_to posts_path 
+	else
+		redirect_to posts_path
+	end
+  end
+  
+  def ban
+	if user_signed_in? and current_user.is_admin?
+		#da definire dopo aver creato la blacklist
+		@user = User.all.find(params[:id])
+		email = @user.email
+		@user.destroy
+		Blacklist.create(email: email)
+		redirect_to posts_path
+	else
+		redirect_to posts_path
 	end
   end
   
@@ -74,7 +100,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-	redirect_to root_path
+	if !current_user.is_admin?
+		redirect_to root_path
+	end
   end
 
   # POST /posts or /posts.json
@@ -102,7 +130,7 @@ class PostsController < ApplicationController
 	if user_signed_in?
 		respond_to do |format|
 		  if @post.update(post_params)
-			format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+			format.html { redirect_to posts_path, notice: "Post was successfully updated." }
 			format.json { render :show, status: :ok, location: @post }
 		  else
 			format.html { render :edit, status: :unprocessable_entity }

@@ -60,6 +60,7 @@ body{
                 margin-bottom: 0;
             }
 
+
         }
 
 
@@ -107,7 +108,13 @@ body{
     }
 
     #drop{
-        margin-left: 5px;
+		width: 100%;
+		background-color: blue;
+		cursor: pointer;
+    }
+    
+    .toggle-image {
+		margin-left: 50px;
     }
 
     .comments{
@@ -115,9 +122,13 @@ body{
         margin-top: 5px;
         padding: none;
 
-        .author_name{
-            font-size: 15px;
+        .username-comment{
             font-weight: bold;
+            border: none;
+            background-color: transparent;
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 18px;
         }
 
         .comment_text{

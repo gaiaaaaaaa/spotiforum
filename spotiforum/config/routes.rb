@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :blacklists
   get 'pages/home'
   root 'pages#home'
   get 'pages/community' => 'posts#index'
@@ -10,7 +11,10 @@ Rails.application.routes.draw do
   post 'users/create_your_own_playlist', to: 'users#create_your_own_playlist'
   post 'profiles/home', to: 'profiles#home', as: 'profile_home'
   post '/post/:id/favourite', to: 'posts#favourite', as: 'favourite'
+  post '/post/:id/warn', to: 'posts#warn', as: 'warn'
+  post '/post/:id/ban', to: 'posts#ban', as: 'ban'
   delete '/favourite', to: 'favourites#destroy', as: :destroy_favourite
+  delete '/warns', to: 'warns#destroy', as: :destroy_warn
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
 	  sessions: 'users/sessions',
