@@ -43,6 +43,8 @@
           <%= image_tag "user.svg", class: "profile-default" %>
         <% end %>
         <%= button_to @user[:name], profile_home_path, method: :post, params: {id: @user[:id]}, class: "username-comment" %> 
+        
+
       </div>
       <h3 class="content"><%= post.content %></h3>
       <h4 class="tags"><%= post.tag %></h4>
@@ -108,7 +110,7 @@
             <% comments = @comments.where(post_id: post.id) %>
             <% comments.each do |comment| %>
               <% @user = User.find_by(id: comment.user_id) %>
-              <p class="author_name"><%= @user[:name] %></p>
+              <%= button_to @user[:name], profile_home_path, method: :post, params: {id: @user[:id]}, class: "username-comment" %> 
               <div class="button-text">
                 <p class="comment_text"><%= comment.content %></p>
                 <%= button_to comment, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-button"  do %>
