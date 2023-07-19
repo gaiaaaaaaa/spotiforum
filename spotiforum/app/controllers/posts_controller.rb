@@ -35,7 +35,7 @@ class PostsController < ApplicationController
   end
 
   def like
-    if user_signed_in?
+    if user_signed_in? and !current_user.is_admin?
 		#trovo il post attraverso l'id passato come parametro
 		@post = Post.all.find(params[:id])
 		#creo il like con l'id del post e l'id dell'utente attualmente loggato
@@ -48,7 +48,7 @@ class PostsController < ApplicationController
   end
 
   def favourite
-	if user_signed_in?
+	if user_signed_in? and !current_user.is_admin?
 		#trovo il post attraverso l'id passato come parametro
 		@post = Post.all.find(params[:id])
 		#creo il favourite con l'id del post e l'id dell'utente attualmente loggato
