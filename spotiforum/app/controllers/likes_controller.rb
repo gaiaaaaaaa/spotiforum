@@ -4,19 +4,23 @@ class LikesController < ApplicationController
   # GET /likes or /likes.json
   def index
     @likes = Like.all
+    redirect_to posts_path
   end
 
   # GET /likes/1 or /likes/1.json
   def show
+	redirect_to posts_path
   end
 
   # GET /likes/new
   def new
     @like = Like.new
+    redirect_to posts_path
   end
 
   # GET /likes/1/edit
   def edit
+	redirect_to posts_path
   end
 
   # POST /likes or /likes.json
@@ -49,12 +53,14 @@ class LikesController < ApplicationController
 
   # DELETE /likes/1 or /likes/1.json
   def destroy
-    @like.destroy
+	if user_signed_in? and @like.user_id == current_user.id
+		@like.destroy
 
-    respond_to do |format|
-      format.html { redirect_to likes_url, notice: "Like was successfully destroyed." }
-      format.json { head :no_content }
-    end
+		respond_to do |format|
+		  format.html { redirect_to posts_path, notice: "Like was successfully destroyed." }
+		  format.json { head :no_content }
+		end
+	end
   end
 
   private

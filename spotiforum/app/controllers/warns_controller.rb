@@ -3,20 +3,27 @@ class WarnsController < ApplicationController
 
   # GET /warns or /warns.json
   def index
-    @warns = Warn.all
+	if user_signed_in? and current_user.is_admin?
+		@warns = Warn.all
+	else
+		redirect_to root_path
+	end
   end
 
   # GET /warns/1 or /warns/1.json
   def show
+	redirect_to root_path
   end
 
   # GET /warns/new
   def new
     @warn = Warn.new
+    redirect_to root_path
   end
 
   # GET /warns/1/edit
   def edit
+	redirect_to root_path
   end
 
   # POST /warns or /warns.json
@@ -49,12 +56,14 @@ class WarnsController < ApplicationController
 
   # DELETE /warns/1 or /warns/1.json
   def destroy
-    @warn.destroy
+	if user_signed_in? and current_user.is_admin?
+		@warn.destroy
 
-    respond_to do |format|
-      format.html { redirect_to warns_url, notice: "Warn was successfully destroyed." }
-      format.json { head :no_content }
-    end
+		respond_to do |format|
+		  format.html { redirect_to warns_url, notice: "Warn was successfully destroyed." }
+		  format.json { head :no_content }
+		end
+	end
   end
 
   private

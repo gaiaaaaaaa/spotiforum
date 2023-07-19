@@ -4,19 +4,23 @@ class FavouritesController < ApplicationController
   # GET /favourites or /favourites.json
   def index
     @favourites = Favourite.all
+    redirect_to posts_path
   end
 
   # GET /favourites/1 or /favourites/1.json
   def show
+	redirect_to posts_path
   end
 
   # GET /favourites/new
   def new
     @favourite = Favourite.new
+    redirect_to posts_path
   end
 
   # GET /favourites/1/edit
   def edit
+	redirect_to posts_path
   end
 
   # POST /favourites or /favourites.json
@@ -50,14 +54,31 @@ class FavouritesController < ApplicationController
   # DELETE /favourites/1 or /favourites/1.json
   def destroy
     @favourite.destroy
-
+	
     respond_to do |format|
-      format.html { redirect_to  user_path(current_user.id), notice: "Favourite was successfully destroyed." }
+	  redirect_path = determine_redirect_path(request.referer)
+      format.html { redirect_to  redirect_path, notice: "Favourite was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
+	  #funzione per determinare il path
+	  def determine_redirect_path(referer)
+		if referer.present? 
+		  if referer.include?('users')
+			return user_path(current_user.id)
+		  elsif referer.include?('/pages/community') or referer.include?('posts')
+			return '/pages/community'
+		  else
+			return root_path
+		  end
+		else
+		  return root_path
+		end
+	  end
+  
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_favourite
       @favourite = Favourite.find(params[:id])

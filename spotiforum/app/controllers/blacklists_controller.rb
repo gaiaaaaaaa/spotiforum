@@ -3,20 +3,26 @@ class BlacklistsController < ApplicationController
 
   # GET /blacklists or /blacklists.json
   def index
+	if !user_signed_in? or !current_user.is_admin?
+		redirect_to root_path
+	end
     @blacklists = Blacklist.all
   end
 
   # GET /blacklists/1 or /blacklists/1.json
   def show
+	redirect_to root_path
   end
 
   # GET /blacklists/new
   def new
     @blacklist = Blacklist.new
+    redirect_to root_path
   end
 
   # GET /blacklists/1/edit
   def edit
+	redirect_to root_path
   end
 
   # POST /blacklists or /blacklists.json
@@ -49,12 +55,14 @@ class BlacklistsController < ApplicationController
 
   # DELETE /blacklists/1 or /blacklists/1.json
   def destroy
-    @blacklist.destroy
+	if user_signed_in? and current_user.is_admin?
+		@blacklist.destroy
 
-    respond_to do |format|
-      format.html { redirect_to blacklists_url, notice: "Blacklist was successfully destroyed." }
-      format.json { head :no_content }
-    end
+		respond_to do |format|
+		  format.html { redirect_to blacklists_url, notice: "Blacklist was successfully destroyed." }
+		  format.json { head :no_content }
+		end
+	end
   end
 
   private
