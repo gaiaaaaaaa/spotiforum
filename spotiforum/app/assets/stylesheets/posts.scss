@@ -107,7 +107,13 @@ body{
     }
 
     #drop{
-        margin-left: 5px;
+		width: 100%;
+		background-color: blue;
+		cursor: pointer;
+    }
+    
+    .toggle-image {
+		margin-left: 50px;
     }
 
     .comments{
