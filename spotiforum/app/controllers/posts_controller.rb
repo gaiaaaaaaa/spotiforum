@@ -65,11 +65,11 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-	if user_signed_in?
-		@post = Post.new
-	else
-		redirect_to root_path
-	end
+    if user_signed_in? and !current_user.is_admin?
+      @post = Post.new
+    else
+      redirect_to '/pages/community'
+    end
   end
 
   # GET /posts/1/edit
@@ -116,7 +116,7 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-	if user_signed_in?
+	if user_signed_in? or (user_signed_in? and current_user.is_admin?)
 		@post.destroy
 
 		respond_to do |format|
