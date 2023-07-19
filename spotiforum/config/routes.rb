@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   post '/post/:id/favourite', to: 'posts#favourite', as: 'favourite'
   post '/post/:id/warn', to: 'posts#warn', as: 'warn'
   post '/post/:id/ban', to: 'posts#ban', as: 'ban'
-  delete '/favourite', to: 'favourites#destroy', as: :destroy_favourite
+  delete '/favourites', to: 'favourites#destroy', as: :destroy_favourite
+  delete '/likes', to: 'likes#destroy', as: :destroy_like
   delete '/warns', to: 'warns#destroy', as: :destroy_warn
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
