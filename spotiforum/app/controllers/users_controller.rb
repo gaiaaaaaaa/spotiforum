@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-	if current_user.id != params[:id]
+	if current_user.id != params[:id].to_i
 		redirect_to root_path
 	end
   end
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-	if current_user.id != params[:id]
+	if current_user.id != params[:id].to_i
 		respond_to do |format|
 		  if @user.update(user_params)
 			format.html { redirect_to user_url(@user), notice: "User was successfully updated." }

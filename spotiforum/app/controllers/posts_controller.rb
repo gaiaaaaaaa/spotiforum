@@ -91,16 +91,18 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-	if user_signed_in?
-		@post = Post.new
-	else
-		redirect_to root_path
-	end
+    if user_signed_in? and !current_user.is_admin?
+      @post = Post.new
+    else
+      redirect_to '/pages/community'
+    end
   end
 
   # GET /posts/1/edit
   def edit
-	redirect_to root_path
+	if !current_user.is_admin?
+		redirect_to root_path
+	end
   end
 
   # POST /posts or /posts.json
@@ -128,7 +130,7 @@ class PostsController < ApplicationController
 	if user_signed_in?
 		respond_to do |format|
 		  if @post.update(post_params)
-			format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+			format.html { redirect_to posts_path, notice: "Post was successfully updated." }
 			format.json { render :show, status: :ok, location: @post }
 		  else
 			format.html { render :edit, status: :unprocessable_entity }
@@ -142,7 +144,7 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-	if user_signed_in?
+	if user_signed_in? or (user_signed_in? and current_user.is_admin?)
 		@post.destroy
 
 		respond_to do |format|

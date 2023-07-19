@@ -45,18 +45,20 @@
         @spotiforum = playlist
       end
     end
-
+    
     if @spotiforum != nil %>
     <%  songs = @spotiforum.tracks%>
-
+    <ul class="list-group">
     <%  songs.each do |song| %>
-    <%=  "Titolo: #{song.name}" %> <br> 
-    <%=  "Artista: #{song.artists[0].name}" %> <br>
-    <%=  "Album: #{song.album.name}" %> <br>
-    <%=  "Durata: #{song.duration_ms} ms" %> <br>
-      <br>
-    <%  end
-    else%>
+      <li class="list-group-item">
+        <%=  "Titolo: #{song.name}" %> <br> 
+        <%=  "Artista: #{song.artists[0].name}" %> <br>
+        <%=  "Album: #{song.album.name}" %> <br>
+        <%=  "Durata: #{song.duration_ms} ms" %> <br>
+      </li>
+    <%  end %>
+    </ul>
+    <%else%>
     <%= "Non hai ancora creato questa playlist"%>
     <%end%>
 </div>
@@ -87,7 +89,7 @@
       <div class="col-sm-2">
         <%= image_tag "comment.svg", class: "btn_for_user" %>
       </div>
-
+      </div>
   </div>
 <%end%>
 
