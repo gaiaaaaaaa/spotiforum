@@ -4,8 +4,8 @@ RSpec.describe LikesController, type: :controller do
 	describe "POST create" do
 		# Creo l'utente che metterà like al post e il post stesso, per verificare che tutto vada correttamente.
 		before do
-			@user1 = User.create!(name: 'Utente1', email: 'u1@mail.com', photo: 1, spotify: false, song: nil, google: false, encrypted_password: '123456')
-			@user2 = User.create!(name: 'Utente2', email: 'u2@mail.com', photo: 1, spotify: false, song: nil, google: false, encrypted_password: '123456')
+			@user1 = User.create!(name: 'Utente1', email: 'u1@mail.com', photo: 1, spotify: false, song: nil, google: false, password: '123456')
+			@user2 = User.create!(name: 'Utente2', email: 'u2@mail.com', photo: 1, spotify: false, song: nil, google: false, password: '123456')
 			@post1 = Post.create!(content: 'Post', user_id: @user1.id, tag: '#1')
 			@like1 = Like.create!(user_id: @user1.id, post_id: @post1.id)
 		end

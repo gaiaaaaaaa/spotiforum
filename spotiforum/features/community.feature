@@ -12,23 +12,21 @@ Feature: Community Page
 		And I fill in "Password" with "123456"
 		And I fill in "Password confirmation" with "123456"
 		And I click the "Sign up" button
-		Then I should see "Benvenuto su Spotiforum!"
+		Then I should see "Benvenuto/a su Spotiforum, example!"
 	
 		When I click the link with name "Community"
 		Then I should be on the posts page
 		When I click the link with ID my-link
 		Then I should be on the new post page
 		When I fill in "Content" with "Post di test"
-		And I fill in "User" with 1
 		And I fill in "Tag" with "#test"
 		And I press "Create Post"
+		And I should be on the posts page
 		Then I should see "Post was successfully created."
+		Then I should see a button with text "example"
 		And I should see "Post di test"
-		And I should see "1"
 		And I should see "#test"
 		And I should have 1 post
-		
-		When I click the link with name "Back"
-		Then I should be on the posts page
+	
 		When I click on the button with ID AddLike
 		Then I should see the number of likes increased by one

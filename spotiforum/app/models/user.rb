@@ -66,25 +66,27 @@ class User < ApplicationRecord
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable,
            :omniauthable, omniauth_providers: %i[google_oauth2 spotify]
+    
+    attr_readonly :spotify, :google, :admin
 
-      has_one_attached :image
-      before_save {self.email = email.downcase}
-      
-      def self.from_omniauthGoogle(access_token)
-          data = access_token.info
-          user = User.where(email: data['email']).first
-  
-          # Uncomment the section below if you want users to be created if they don't exist
-           unless user
-               user = User.create(name: data['name'],
-                  email: data['email'],
-                  password: Devise.friendly_token[0,20],
-                  google: true,
-                  spotify: false
-               )
-           end
-          user
-      end
+    has_one_attached :image
+    before_save {self.email = email.downcase}
+    
+    def self.from_omniauthGoogle(access_token)
+        data = access_token.info
+        user = User.where(email: data['email']).first
+
+        # Uncomment the section below if you want users to be created if they don't exist
+        unless user
+            user = User.create(name: data['name'],
+                email: data['email'],
+                password: Devise.friendly_token[0,20],
+                google: true,
+                spotify: false
+            )
+        end
+        user
+    end
 
 
     def password_required?

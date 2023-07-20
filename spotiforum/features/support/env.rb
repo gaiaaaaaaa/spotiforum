@@ -5,6 +5,22 @@
 # files.
 
 require 'cucumber/rails'
+require 'omniauth'
+require 'omniauth-spotify'
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:spotify] = OmniAuth::AuthHash.new({
+  provider: 'spotify',
+  uid: '12345',
+  info: {
+    name: 'SpotifyUser',
+    email: 'spotifyuser@example.com',
+  },
+  credentials: {
+    token: 'mock_access_token',
+    expires_at: Time.now + 3600, # validità del token => un'ora da adesso
+  }
+})
 
 # frozen_string_literal: true
 
