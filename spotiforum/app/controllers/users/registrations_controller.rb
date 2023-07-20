@@ -21,22 +21,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   def update
-	@user = current_user
-	if needs_password?
-	  if @user.update_with_password(account_update_params)
-		bypass_sign_in(@user)
-		redirect_to after_update_path_for(@user), notice: 'Your account has been updated successfully.'
-	  else
-		render "edit"
-	  end
-	else
-	  if @user.update_without_password(account_update_params)
-		bypass_sign_in(@user)
-		redirect_to after_update_path_for(@user), notice: 'Your account has been updated successfully.'
-	  else
-		render "edit"
-	  end
-	end
+    @user = current_user
+    if needs_password?
+      if @user.update_with_password(account_update_params)
+        bypass_sign_in(@user)
+        redirect_to after_update_path_for(@user), notice: 'Your account has been updated successfully.'
+      else
+        render "edit"
+      end
+    else
+      if @user.update_without_password(account_update_params)
+        bypass_sign_in(@user)
+        redirect_to after_update_path_for(@user), notice: 'Your account has been updated successfully.'
+      else
+        render "edit"
+      end
+    end
   end
   
   private

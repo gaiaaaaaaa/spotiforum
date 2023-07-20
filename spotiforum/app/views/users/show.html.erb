@@ -55,7 +55,7 @@
     <h2>Aggiorna le tue statistiche spotify</h2>
     <h3>Scegli la tua canzone preferita</h3>
     <%= form_tag('search' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <%= label_tag :search_query, "Immetti una canzone:" %>
       <%= text_field_tag :search_query %>
       <%= submit_tag "Modifica" %>
@@ -66,7 +66,7 @@
 
     <h3>Scopri l'artista che hai ascoltato di più</h3>
     <%= form_tag('user_artist' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <%= label_tag :search_query, "Clicca qui per scoprire l'artista:" %>
       <%= submit_tag "Scopri" %>
     <% end %>
@@ -76,7 +76,7 @@
 
     <h3>Scopri la canzone che hai ascoltato di più ultimamente</h3>
     <%= form_tag('user_song' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <%= label_tag :search_query, "Clicca qui per scoprire la canzone:" %>
       <%= submit_tag "Scopri" %>
     <% end %>
@@ -86,20 +86,20 @@
 
     <h3>Playlist pensata per te</h3>
     <%= form_tag('create_recommended_playlist' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <%= label_tag :search_query, "Crea playlist:" %>
       <%= submit_tag "Crea" %>
     <% end %>
 
     <h3>Crea la tua playlist!</h3>
     <%= form_tag('create_your_own_playlist', method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <% (1..5).each do |i| %>
         <%= label_tag "search_query#{i}", "Canzone#{i}:" %>
         <%= text_field_tag "search_query#{i}" %>
         </br>
       <% end %>
-      <%= submit_tag "Cerca" %>
+      <%= submit_tag "Crea" %>
     <% end %>
   </div>
 

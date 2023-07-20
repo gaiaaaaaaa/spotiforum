@@ -67,7 +67,7 @@ When ('I click the link with name {string}') do |link_name|
 end
 
 Then ('I should be on the posts page') do
-	expect(page).to have_current_path(posts_path)
+	expect(page).to have_current_path('/pages/community')
 end
 
 When('I click on the button with ID AddLike') do
@@ -76,4 +76,43 @@ end
 
 Then('I should see the number of likes increased by one') do
 	expect(Like.count).to eq(1)
+end
+
+Then('I should see a button with text {string}') do |user_name|
+	page.should have_button(user_name)
+end
+
+#
+#
+#
+# Scenario:	registration with spotify and choosing favourite song
+When('I click on the button with class spotifyLogin') do
+	puts current_url
+	find(".spotifyLogin").click
+end
+
+Then ('I should be on the Spotify authentication page') do
+	expect(current_url).to include('https://accounts.spotify.com')
+end
+
+When('I log in with my Spotify credentials') do
+	click_button 'Allow'
+end
+
+Then('I should be redirected back to the app') do
+	# Implement appropriate assertions to ensure the user is redirected back to your app
+	expect(current_path).to eq('/')
+end
+  
+When('I deny authorization for the app') do
+	click_button 'Deny'
+end
+  
+Then('I should see an error message') do
+	# Implement appropriate assertions to ensure the user sees an error message
+	expect(page).to have_content('Authorization denied')
+end
+
+When ('I click on the button with value {string}') do |val|
+	click_button(val)
 end
