@@ -8,6 +8,6 @@ Feature: User Registration
 		And I fill in "Password" with "123456"
 		And I fill in "Password confirmation" with "123456"
 		And I click the "Sign up" button
-		Then I should see "Benvenuto su Spotiforum!"
+		Then I should see "Benvenuto/a su Spotiforum, example!"
 		
 		
