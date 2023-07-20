@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe User do
 	# Creo un utente perché voglio testare che venga creato correttamente.
 	before do
-		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', photo: 1, spotify: false, song: nil, google: false, encrypted_password: '123456')
+		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', photo: 1, spotify: false, song: nil, google: false, password: '123456')
+		@userspotify = User.create!(name: 'spotiUser', email: 'spotiuser@mail.com', photo: 1, spotify: true, song: nil, google: false, password: '123456')
 	end
 	
 	it "has a name" do
@@ -32,7 +33,21 @@ RSpec.describe User do
 	end
 	it "has a password" do
 		# Verifico che l'utente sia stato correttamente creato con la password che ho passato.
-		expect(@user.encrypted_password).to eq('123456')
+		expect(@user.password).to eq('123456')
 	end
-	
+	it "is not an admin" do
+		# Verifico che l'utente sia stato correttamente creato con la password che ho passato.
+		expect(@user.admin).to eq(false)
+	end
+
+	#verifico che l'update di search song funzioni correttamente
+	it 'changes song' do
+		@userspotify.update!(song: "Hello")
+		expect(@userspotify.song).to eq("Hello")
+	end
+
+	it 'does not change google because it is spotify user' do
+		@userspotify.update(google: true)
+		expect(@userspotify).to be_invalid
+	end
 end

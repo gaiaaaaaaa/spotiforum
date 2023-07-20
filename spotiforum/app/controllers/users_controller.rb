@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-	if current_user.id != params[:id].to_i
+	if current_user.id == params[:id].to_i
 		respond_to do |format|
 		  if @user.update(user_params)
 			format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
@@ -102,7 +102,6 @@ class UsersController < ApplicationController
       else
         @nome_canzone = "Nessuna canzone trovata."
       end
-      puts @nome_canzone
       #flash[@nome_canzone]
       session[:canzone] = @nome_canzone
       redirect_to user_path(current_user.id)
@@ -113,12 +112,6 @@ class UsersController < ApplicationController
   def user_artist
     RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
     
-    #credential = {
-    #  client_id: 'd654966e96084bcdb7ec9a296fa0b0a1',
-    #  client_secret: 'f271efc1b16c404f9ee71c318baa581a'
-    #}
-
-    #user = RSpotify::User.new(credentials: credential, access_token: session[:spotify_access_token])
     user_info = RSpotify::User.new(session[:spotify_access_token])
     top_artists = user_info.top_artists
     most_listened_artist = top_artists.first
