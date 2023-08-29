@@ -40,3 +40,19 @@ attention{
 .posts{
     margin-left: 10px;
 }
+
+.spotify_container{
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+    margin-left: 70px;
+}
+
+.favsonginput_div{
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+
+.playlist_container{
+    margin-bottom: 100px
+}
