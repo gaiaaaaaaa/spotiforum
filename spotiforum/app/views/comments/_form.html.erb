@@ -1,3 +1,5 @@
+<div class="contenitore-form">
+
 <%= form_with(model: comment) do |form| %>
   <% if comment.errors.any? %>
     <div id="error_explanation">
@@ -27,10 +29,12 @@
 
   <div class="field">
     <%= form.label :content %>
-    <%= form.text_area :content %>
+    <br>
+    <%= form.text_area :content, class: "commento form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Crea", class: "btn btn-primary" %>
   </div>
 <% end %>
+</div>

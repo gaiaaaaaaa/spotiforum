@@ -1,3 +1,5 @@
+<div class="contenitore-form">
+
 <%= form_with(model: post) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
@@ -14,22 +16,21 @@
   <% if current_user.id == post.user_id || post.user_id == nil %>
 	  <div class="field">
 		<%= form.label :content %>
-		<%= form.text_area :content %>
+    <br>
+		<%= form.text_area :content, class: "form-control contenuto" %>
 	  </div>
   <% end %>
 
-  <!-- TOLTO PER ASSEGNARE AUTOMATICAMENTE L'AUTORE (CURRENT USER)
-  <div class="field">
-    <= form.label :user_id >
-    <= form.number_field :user_id >
-  </div> -->
 
   <div class="field">
     <%= form.label :tag %>
-    <%= form.text_field :tag, placeholder: '#tag1 #tag2 #... #tagN' %>
+    <br>
+    <%= form.text_field :tag, placeholder: '#tag1 #tag2 #... #tagN', class: "form-control tags" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Crea", class: "btn btn-primary"%>
   </div>
 <% end %>
+
+</div>
