@@ -20,21 +20,29 @@
 
 
 <% if @user.spotify ==true %>
-  <div class='row'>
-    <h2> Statistiche di <%= @user.name%></h2> 
-    <div class="toggle-playlist" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div> 
+  <div data-toggle="collapse" href="#playlist" role="button" aria-expanded="false" aria-controls="playlist"> <h2> Statistiche di <%= @user.name%>: </h2>  </div> 
+  <div class="collapse" id="playlist">
+  
+  <!-- card per arista e canzone preferiti-->
+  <div class="card-deck">
+    <div class="card posts_container">
+      <h3> Canzone preferita</h3>
+      <p> <%= @user.song %> </p>
+    </div>
+    <div class="card posts_container">
+      <h3> Canzone più ascoltata del periodo</h3>
+      <p> <%= @user.mostlistenedsong %> </p>
+    </div>
+    <div class="card posts_container">
+      <h3> Artista più ascoltato del periodo</h3>
+      <p> <%= @user.mostlistenedartist %> </p>
+    </div>
   </div>
-  <div id="playlist">
-
-  <h3> Canzone preferita</h3>
-  <p> <%= @user.song %> </p>
-
-  <h3> Canzone più ascoltata del periodo</h3>
-  <p> <%= @user.mostlistenedsong %> </p>
-
-  <h3> Artista più ascoltata del periodo</h3>
-  <p> <%= @user.mostlistenedartist %> </p>
-
+  
+  <br>
+  <br>
+  
+  <!--playlist consigliata con collapse bootstrap-->
   <h3> La playlist che ti abbiamo consigliato </h3>
   <%RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a") 
     user = RSpotify::User.find(session[:spotify_access_token]["uid"])  # Sostituisci 'username' con il nome utente Spotify desiderato
@@ -48,16 +56,19 @@
     
     if @spotiforum != nil %>
     <%  songs = @spotiforum.tracks%>
-    <ul class="list-group">
+    <div class="card posts_container">
     <%  songs.each do |song| %>
-      <li class="list-group-item">
-        <%=  "Titolo: #{song.name}" %> <br> 
-        <%=  "Artista: #{song.artists[0].name}" %> <br>
-        <%=  "Album: #{song.album.name}" %> <br>
-        <%=  "Durata: #{song.duration_ms} ms" %> <br>
-      </li>
+        <p data-toggle="collapse" href="#collapse<%= song.id%>" role="button" aria-expanded="false" aria-controls="collapse<%= song.id%>">
+          <%=  "#{song.name}" %>
+        </p>
+        <div class="collapse" id="collapse<%= song.id%>" style="padding-left: 75px;"> 
+            <p> <%=  "Artista: #{song.artists[0].name}" %> </p>
+            <p> <%=  "Album: #{song.album.name}" %> </p>
+            <p> <%=  "Durata: #{song.duration_ms} ms" %> </p>
+        </div>
+      <hr style="border-color: rgba(28, 126, 28, 0.479);">
     <%  end %>
-    </ul>
+    </div>
     <%else%>
     <%= "Non hai ancora creato questa playlist"%>
     <%end%>
