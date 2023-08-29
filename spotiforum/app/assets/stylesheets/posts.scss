@@ -21,10 +21,14 @@ body{
         margin-top: 20px;
         margin-left: 20px;
         border-radius: 10px;
-        border: solid;
-        border-color: rgba(28, 126, 28, 0.479);
-        padding: 5px;
+        border-right: 7px solid;
+        border-bottom: 7px solid;
+        border-top:  2px solid;
+        border-left:  2px solid;
+        border-color: #1db954;
+        padding: 10px;
         width: 50%;
+        background-color: #fff;
 
         .user-identity{
             display: flex;
@@ -148,6 +152,34 @@ body{
             margin-top: -6px;
         }
 
+    }
+
+    .contenuto.form-control{
+        width: 300px;
+        height: 200px;
+        font-size: 18px;
+    }
+
+    .tags{
+        width: 200px;
+        font-size: 18px;
+
+    }
+
+    #crea_post{
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: -40px;
+    }
+
+    .title{
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: -40px;
     }
 
 }

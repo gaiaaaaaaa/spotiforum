@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'pages/home'
   root 'pages#home'
   get 'pages/community' => 'posts#index'
+  get 'profiles/home', to: redirect('pages/home')
   post '/post/:id/like', to: 'posts#like', as: 'like'
   post 'users/search', to: 'users#search'
   post 'users/user_artist', to: 'users#user_artist'

@@ -15,6 +15,16 @@ attention{
     margin-bottom: 20px;
 }
 
+.sign-out{
+    font-size: 17px;
+    text-align: center;
+    display: block;
+    margin: auto;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: -15px;
+}
+
 .button-text{
     display: flex;
     margin-left: 5px;
@@ -40,6 +50,135 @@ attention{
 .posts{
     margin-left: 10px;
 }
+
+#registrazione{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+#login{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: -40px;
+}
+
+.contenitore-form{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: rgba(127, 219, 188, 0.829);
+    align-items: center;
+    margin: 0;
+    margin-top: 300px;
+    padding-left: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 30px;
+    text-align: center;
+
+    .form-control{
+        font-size: 18px;
+    }
+
+    .invito{
+        font-size: 15px;
+        padding: 0;
+        margin: auto;
+    }
+
+    .invito2{
+        font-size: 15px;
+        padding: 0;
+    }
+
+    .form-control{
+        width: 200px;
+        margin: auto;
+    }
+
+}
+
+#cancella{
+    font-size: 15px;
+    color: red;
+}
+
+#cancella:hover{
+    background-color: red;
+    color: white;
+}
+
+.upload{
+    font-size: 14px;
+    margin-left: 165px;
+}
+
+.upload::-webkit-file-upload-button{
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #1db954;
+    border: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+    font-size: 13px;
+
+}
+
+.title-modify{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.user-table{
+    font-size: 18px;
+}
+
+.user-table td{
+    font-size: 15px;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    
+}
+
+.user-table th{
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.profile-btn{
+    align-self: center;
+    margin: 0;
+    background-color: #1db954;
+    color: #fff;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td{
+    padding: 10px;
+    text-align: left;
+}
+
 
 .spotify_container{
     display: flex; 
