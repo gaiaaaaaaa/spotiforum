@@ -7,110 +7,96 @@
   <%= image_tag "user.svg", class: "profile-default" %>
 <% end %>
 
-<p>
-  <strong>Name:</strong>
+<div class="username">
   <%= @user.name %>
-</p>
+    <%= link_to edit_user_registration_path(@user) do %>
+      <%= image_tag "pencil.svg", class: "btn_for_user" %>
+    <% end %>
+</div>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
 
-<p>
-  <strong>Photo:</strong>
-  <%= @user.photo %>
-</p>
+<div class="sign-out">
+  <%= link_to 'Sign out', '/users/sign_out', :method=>:delete %>
+</div>
 
-<p>
-  <strong>Spotify:</strong>
-  <%= @user.spotify %>
-</p>
-
-<p>
-  <strong>Song:</strong>
-  <%= @user.song %>
-</p>
-
-<p>
-  <strong>Google:</strong>
-  <%= @user.google %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-  <%= link_to 'Modifica profilo', edit_user_registration_path(@user) %> |
-  <%= link_to 'Sign out', '/users/sign_out', :method=>:delete %> |
-  <attention><%= link_to 'Cancella account', @user, method: :delete, data: { confirm: 'Are you sure?' } %> </attention> |
-  <%= link_to 'Back', root_path %>
-
-  </br>
 
 <% if current_user.spotify == true %>
 
   <div class="text_container">
     <h2>Aggiorna le tue statistiche spotify</h2>
-    <h3>Scegli la tua canzone preferita</h3>
-    <%= form_tag('search' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <%= label_tag :search_query, "Immetti una canzone:" %>
-      <%= text_field_tag :search_query %>
-      <%= submit_tag "Modifica" %>
-    <% end %>
 
-    <h4>Risultato della ricerca</h4>
-    <p>Nome della canzone: <%= session[:canzone] %></p>
+    <div class="card-deck">
+      <div class="card posts_container">
+        <h3>Scegli la tua canzone preferita</h3>
+        <%= form_tag('search' , method: :post) do %>
+          <input type="hidden" "name="authenticity_token" value="<%= form_authenticity_token %>">
+          <div class="spotify_container">
+            <div class="favsonginput_div">
+              <%= text_field_tag :search_query %>
+            </div>
+            <%= submit_tag "Modifica", class: "btn btn-xs btn-primary" %>
+          </div>
+        <% end %>
+        <p>Nome della canzone: <%= session[:canzone] %></p>
+      </div>
+      <div class="card posts_container">
+        <h3>Scopri l'artista che hai ascoltato di più</h3>
+        <%= form_tag('user_artist' , method: :post) do %>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <%= submit_tag "Scopri", class: "btn btn-xs btn-primary"  %>
+        <% end %>
+    
+        <p>Nome dell'artista: <%= session[:artista] %></p>
+      </div>
+      <div class="card posts_container">
+        <h3>Scopri la canzone che hai ascoltato di più</h3>
+        <%= form_tag('user_song' , method: :post) do %>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <%= submit_tag "Scopri", class: "btn btn-xs btn-primary"  %>
+        <% end %>
 
-    <h3>Scopri l'artista che hai ascoltato di più</h3>
-    <%= form_tag('user_artist' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <%= label_tag :search_query, "Clicca qui per scoprire l'artista:" %>
-      <%= submit_tag "Scopri" %>
-    <% end %>
+        <p>Nome della canzone: <%= session[:fcanzone] %></p>
+      </div>
+    </div>
 
-    <h4>Risultato della ricerca</h4>
-    <p>Nome dell'artista: <%= session[:artista] %></p>
+    <div class="spotify_container">
+      <div class="card posts_container playlist_container">
+        <h3>Playlist pensata per te</h3>
+        <%= form_tag('create_recommended_playlist' , method: :post) do %>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <%= submit_tag "Crea", class: "btn btn-xs btn-primary"  %>
+        <% end %>
+      </div>
 
-    <h3>Scopri la canzone che hai ascoltato di più ultimamente</h3>
-    <%= form_tag('user_song' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <%= label_tag :search_query, "Clicca qui per scoprire la canzone:" %>
-      <%= submit_tag "Scopri" %>
-    <% end %>
+      <div class="card posts_container">
+        <h3>Crea la tua playlist!</h3>
+        <%= form_tag('create_your_own_playlist', method: :post) do %>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <% (1..5).each do |i| %>
+            <%= label_tag "search_query#{i}", "#{i}:" %>
+            <%= text_field_tag "search_query#{i}" %>
+            </br>
+          <% end %>
+          <%= submit_tag "Crea", class: "btn btn-xs btn-primary"  %>
+        <% end %>
+      </div>
 
-    <h4>Risultato della ricerca</h4>
-    <p>Nome della canzone: <%= session[:fcanzone] %></p>
+    </div>
+  
+      
 
-    <h3>Playlist pensata per te</h3>
-    <%= form_tag('create_recommended_playlist' , method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <%= label_tag :search_query, "Crea playlist:" %>
-      <%= submit_tag "Crea" %>
-    <% end %>
+    
+    
 
-    <h3>Crea la tua playlist!</h3>
-    <%= form_tag('create_your_own_playlist', method: :post) do %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <% (1..5).each do |i| %>
-        <%= label_tag "search_query#{i}", "Canzone#{i}:" %>
-        <%= text_field_tag "search_query#{i}" %>
-        </br>
-      <% end %>
-      <%= submit_tag "Crea" %>
-    <% end %>
+    
   </div>
 
 <% end %>
 
-
-<div class="button-text">
+<div data-toggle="collapse" href="#my_posts" class="button-text" role="button" aria-expanded="false" aria-controls="my_posts">
   <h2>I tuoi post</h2>
-  <div class="toggle-posts" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div>
 </div>
-<div class="posts" style="display:none;">
+<div class="collapse posts" id="my_posts">
   <% @posts.each do |post| %>
     <div class="posts_container">
       <h2 class="username-comment"> <%= current_user.name %> </h2>
@@ -148,11 +134,10 @@
 <br>
 <br>
 
-<div class="button-text">
+<div data-toggle="collapse" href="#my_favourites" class="button-text" role="button" aria-expanded="false" aria-controls="my_favourites">
   <h2>I tuoi post preferiti</h2>
-  <div class="toggle-favourites" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div>
 </div>
-<div class="favourites" style="display:none;">
+<div class="collapse favourites" id="my_favourites">
 <% @favourite_posts.each do |favourite| %>
   <% @user = User.find_by(id: favourite.user_id) %>
   <div class="posts_container">
@@ -196,17 +181,7 @@
 <%end%>
 </div>
 
+<br>
+<attention><%= link_to 'Cancella account', @user, method: :delete, data: { confirm: 'Are you sure?' }, id: "cancella" %> </attention>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function(){
-    $('.toggle-posts').click(function(){
-      $(this).closest('.button-text').next('.posts').toggle();
-    });
-
-    $('.toggle-favourites').click(function(){
-      $(this).closest('.button-text').next('.favourites').toggle();
-    });
-  });
-</script>
 
