@@ -145,8 +145,8 @@
           <%end%>
         </div>
 
-      <div class="toggle-comments" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user toggle-image"%></div>
-      <div class="comments" style="display:none;">
+      <div data-toggle="collapse"  href="#commento" role="button" aria-expanded="false" aria-controls="commento"> <%= image_tag "drop.svg", class: "btn_for_user toggle-image"%> </div> 
+      <div class="collapse comments" id="commento">
             <% comments = @comments.where(post_id: post.id) %>
             <% comments.each do |comment| %>
               <% @user = User.find_by(id: comment.user_id) %>
@@ -165,11 +165,4 @@
     </div>
   <% end %>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function(){
-    $('.toggle-comments').click(function(){
-      $(this).siblings('.comments').toggle();
-    });
-  });
-</script>
+
