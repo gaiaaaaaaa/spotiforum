@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Warns</h1>
+<h1 style="font-size: 30px; margin-left: -40px">Utenti ammoniti</h1>
 
+<div class="user-table">
 <table>
   <thead>
     <tr>
-      <th>User</th>
-      <th>Administrator</th>
+      <th>Utente</th>
+      <th>Amministratore</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,7 +24,7 @@
     <% end %>
   </tbody>
 </table>
+</div>
 
 <br>
 
-<%= link_to 'New Warn', new_warn_path %>

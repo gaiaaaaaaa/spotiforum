@@ -7,47 +7,18 @@
   <%= image_tag "user.svg", class: "profile-default" %>
 <% end %>
 
-<p>
-  <strong>Name:</strong>
+<div class="username">
   <%= @user.name %>
-</p>
+    <%= link_to edit_user_registration_path(@user) do %>
+      <%= image_tag "pencil.svg", class: "btn_for_user" %>
+    <% end %>
+</div>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
 
-<p>
-  <strong>Photo:</strong>
-  <%= @user.photo %>
-</p>
+<div class="sign-out">
+  <%= link_to 'Sign out', '/users/sign_out', :method=>:delete %>
+</div>
 
-<p>
-  <strong>Spotify:</strong>
-  <%= @user.spotify %>
-</p>
-
-<p>
-  <strong>Song:</strong>
-  <%= @user.song %>
-</p>
-
-<p>
-  <strong>Google:</strong>
-  <%= @user.google %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-  <%= link_to 'Modifica profilo', edit_user_registration_path(@user) %> |
-  <%= link_to 'Sign out', '/users/sign_out', :method=>:delete %> |
-  <attention><%= link_to 'Cancella account', @user, method: :delete, data: { confirm: 'Are you sure?' } %> </attention> |
-  <%= link_to 'Back', root_path %>
-
-  </br>
 
 <% if current_user.spotify == true %>
 
@@ -195,6 +166,9 @@
   </div>
 <%end%>
 </div>
+
+<br>
+<attention><%= link_to 'Cancella account', @user, method: :delete, data: { confirm: 'Are you sure?' }, id: "cancella" %> </attention>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

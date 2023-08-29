@@ -8,7 +8,6 @@ Feature: Community Page
 		Given I am on the registration page
 		When I fill in "Name" with "example"
 		And I fill in "Email" with "test@example.com"
-		And I fill in "Photo" with 2
 		And I fill in "Password" with "123456"
 		And I fill in "Password confirmation" with "123456"
 		And I click the "Sign up" button
@@ -20,7 +19,7 @@ Feature: Community Page
 		Then I should be on the new post page
 		When I fill in "Content" with "Post di test"
 		And I fill in "Tag" with "#test"
-		And I press "Create Post"
+		And I press "Crea"
 		And I should be on the posts page
 		Then I should see "Post was successfully created."
 		Then I should see a button with text "example"

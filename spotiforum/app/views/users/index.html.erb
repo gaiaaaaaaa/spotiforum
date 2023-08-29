@@ -1,15 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Users</h1>
+<h1 style="font-size: 30px; margin-left: -40px">Lista utenti</h1>
 
+<div class="user-table">
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Nome</th>
       <th>Email</th>
-      <th>Spotify</th>
-      <th>Google</th>
-      <th>Admin</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,14 +17,12 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= user.spotify %></td>
-        <td><%= user.google %></td>
-        <td><%= user.admin %></td>
-        <td><%= button_to "Profilo utente", profile_home_path, method: :post, params: {id: user[:id]} %> </td>
+        <td><%= button_to "Profilo utente", profile_home_path, method: :post, params: {id: user[:id]}, class: "profile-btn"%> </td>
 
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
 
 <br>
