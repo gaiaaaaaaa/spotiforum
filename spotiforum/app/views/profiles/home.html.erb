@@ -76,6 +76,10 @@
 
 <%end %>
 
+<br>
+<br>
+
+
 <h2> I post di <%= @user.name %>: </h2>
 
 <% @posts.each do |post| %>
@@ -103,12 +107,3 @@
       </div>
   </div>
 <%end%>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function(){
-    $('#drop').click(function(){
-      $('#playlist').toggle();
-    });
-  });
-</script>

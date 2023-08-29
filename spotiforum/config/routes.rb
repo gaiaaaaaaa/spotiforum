@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'profiles/home', to: 'profiles#home', as: 'profile_home'
   post '/post/:id/favourite', to: 'posts#favourite', as: 'favourite'
   post '/post/:id/warn', to: 'posts#warn', as: 'warn'
+  get '/users/:id/edit', to: redirect('pages/home') #per evitare l'uso di questo url
   post '/post/:id/ban', to: 'posts#ban', as: 'ban'
   delete '/favourites', to: 'favourites#destroy', as: :destroy_favourite
   delete '/likes', to: 'likes#destroy', as: :destroy_like

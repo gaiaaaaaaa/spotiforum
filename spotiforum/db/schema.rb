@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_19_084806) do
+ActiveRecord::Schema.define(version: 2023_08_29_161521) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 2023_07_19_084806) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", default: "", null: false
-    t.integer "photo"
     t.boolean "spotify", default: false
     t.string "song"
     t.boolean "google", default: false

@@ -93,12 +93,10 @@
 
 <% end %>
 
-
-<div class="button-text">
+<div data-toggle="collapse" href="#my_posts" class="button-text" role="button" aria-expanded="false" aria-controls="my_posts">
   <h2>I tuoi post</h2>
-  <div class="toggle-posts" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div>
 </div>
-<div class="posts" style="display:none;">
+<div class="collapse posts" id="my_posts">
   <% @posts.each do |post| %>
     <div class="posts_container">
       <h2 class="username-comment"> <%= current_user.name %> </h2>
@@ -136,11 +134,10 @@
 <br>
 <br>
 
-<div class="button-text">
+<div data-toggle="collapse" href="#my_favourites" class="button-text" role="button" aria-expanded="false" aria-controls="my_favourites">
   <h2>I tuoi post preferiti</h2>
-  <div class="toggle-favourites" id="drop"> <%= image_tag "drop.svg", class: "btn_for_user"%></div>
 </div>
-<div class="favourites" style="display:none;">
+<div class="collapse favourites" id="my_favourites">
 <% @favourite_posts.each do |favourite| %>
   <% @user = User.find_by(id: favourite.user_id) %>
   <div class="posts_container">
@@ -187,17 +184,4 @@
 <br>
 <attention><%= link_to 'Cancella account', @user, method: :delete, data: { confirm: 'Are you sure?' }, id: "cancella" %> </attention>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function(){
-    $('.toggle-posts').click(function(){
-      $(this).closest('.button-text').next('.posts').toggle();
-    });
-
-    $('.toggle-favourites').click(function(){
-      $(this).closest('.button-text').next('.favourites').toggle();
-    });
-  });
-</script>
 
