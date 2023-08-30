@@ -51,7 +51,7 @@ RSpec.describe Post do
 	# Creo un utente e un post perché voglio testare che i post vengano creati correttamente.
 	# Voglio che il post abbia l'id di un utente e non un numero magico.
 	before do
-		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', photo: 1, spotify: false, song: nil, google: false, password: '123456')
+		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', spotify: false, song: nil, google: false, password: '123456')
 		@post = Post.create!(content: 'Il mio post di test', user_id: @user.id, tag: '#test')
 	end
 	it "has a content" do

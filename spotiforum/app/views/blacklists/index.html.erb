@@ -1,3 +1,14 @@
+<% content_for :custom_styles do %>
+  <style>
+      body{
+        background-image: url('<%= image_path("warn_back.jpg") %>');
+        background-size: 50%;
+        background-repeat: no-repeat;
+        background-position: center 150px;
+        background-attachment: fixed; 
+      }
+  </style>
+<%end%>
 <p id="notice"><%= notice %></p>
 
 <h1 style="font-size: 30px; margin-left: -40px">Utenti bannati</h1>
