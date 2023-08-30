@@ -83,7 +83,7 @@ class UsersController < ApplicationController
 
   #modifica canzone preferita
   def search
-    RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
+    RSpotify.authenticate(Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret))
 
     query = params[:search_query]
 
@@ -110,7 +110,7 @@ class UsersController < ApplicationController
 
   #scopri artista preferita dal periodo
   def user_artist
-    RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
+    RSpotify.authenticate(Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret))
     
     user_info = RSpotify::User.new(session[:spotify_access_token])
     top_artists = user_info.top_artists
@@ -126,7 +126,7 @@ class UsersController < ApplicationController
 
   #scopri canzone più ascoltata del momento
   def user_song
-    RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
+    RSpotify.authenticate(Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret))
   
     user = RSpotify::User.new(session[:spotify_access_token])
     top_tracks = user.top_tracks
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
 
   #crea playlist basandosi sulla 
   def create_recommended_playlist
-    RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
+    RSpotify.authenticate(Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret))
   
     user = RSpotify::User.new(session[:spotify_access_token])
     top_track = user.top_tracks
@@ -164,7 +164,7 @@ class UsersController < ApplicationController
 
   #crea playlist con canzoni scelte dall'autore
   def create_your_own_playlist
-    RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a")
+    RSpotify.authenticate(Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret))
   
     user = RSpotify::User.new(session[:spotify_access_token])
     

@@ -7,6 +7,18 @@ class VincoloCanzone < ActiveModel::Validator
     end
 end
 
+#se spotify = false allora spotify_username = nil
+class VincoloSpotifyUsername < ActiveModel::Validator
+    def validate(record)
+        if(record.spotify == false and record.spotify_username != nil)
+            record.errors.add :base, "Utente non Spotify non può avere uno Spotify username!"
+        end
+        if(record.spotify == true and record.spotify_username == nil)
+            record.errors.add :base, "Utente  Spotify deve uno Spotify username!"
+        end
+    end
+end
+
 #se google = true allora spotify = false e password = ""
 class VincoloGoogle < ActiveModel::Validator
     def validate(record)
@@ -60,7 +72,6 @@ class VincoloBlacklist < ActiveModel::Validator
     end
 end
 
-
 class User < ApplicationRecord
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -69,6 +80,8 @@ class User < ApplicationRecord
            :omniauthable, omniauth_providers: %i[google_oauth2 spotify]
     
     attr_readonly :spotify, :google, :admin
+
+    has_encrypted :spotify_username
 
     has_one_attached :image
     before_save {self.email = email.downcase}
@@ -108,6 +121,7 @@ class User < ApplicationRecord
     validates_with VincoloPswrd
     validates_with VincoloAdmin
     validates_with VincoloBlacklist
+    validates_with VincoloSpotifyUsername
     has_many :posts, dependent: :destroy
     has_many :likes, dependent: :destroy
     has_many :comments, dependent: :destroy

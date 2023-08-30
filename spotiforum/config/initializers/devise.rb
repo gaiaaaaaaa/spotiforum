@@ -25,8 +25,8 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-  config.omniauth :google_oauth2,'941348660392-aiggrh44hcbi0dqrpfilh15n6domabrs.apps.googleusercontent.com', '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', {scope: 'email, profile'}
-																																						
+  config.omniauth :google_oauth2,Rails.application.credentials.dig(:google_oauth_client_id), Rails.application.credentials.dig(:google_oauth_client_secret), {scope: 'email, profile'}
+																																							
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
@@ -273,7 +273,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :spotify, 'd654966e96084bcdb7ec9a296fa0b0a1', 'f271efc1b16c404f9ee71c318baa581a', scope: 'user-read-email, user-read-private, user-library-modify, user-library-read, user-top-read, playlist-modify-public, playlist-modify-private'
+  config.omniauth :spotify, Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret), scope: 'user-read-email, user-read-private, user-library-modify, user-library-read, user-top-read, playlist-modify-public, playlist-modify-private'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
