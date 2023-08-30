@@ -1,12 +1,25 @@
 <% content_for :custom_styles do %>
-	<style>
-	body{
-		background-image: url('<%= image_path("background.jpg") %>');
-		background-size: 50%;
-		background-repeat: no-repeat;
-		background-position: center 200px;
-	}
-	</style>
+	<%if user_signed_in? and current_user.is_admin?%>
+		<style>
+		body{
+			background-image: url('<%= image_path("background.jpg") %>');
+			background-size: 50%;
+			background-repeat: no-repeat;
+			background-position: center 200px;
+			background-attachment: fixed; 
+		}
+		</style>
+	<%else%>
+		<style>
+		body{
+			background-image: url('<%= image_path("green_background.jpg") %>');
+			background-size: 50%;
+			background-repeat: no-repeat;
+			background-position: center 150px;
+			background-attachment: fixed; 
+		}
+		</style>
+	<%end%>
 <%end%>
 
 <div class="text_container">

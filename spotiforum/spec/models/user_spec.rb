@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe User do
 	# Creo un utente perché voglio testare che venga creato correttamente.
 	before do
-		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', photo: 1, spotify: false, song: nil, google: false, password: '123456')
-		@userspotify = User.create!(name: 'spotiUser', email: 'spotiuser@mail.com', photo: 1, spotify: true, song: nil, google: false, password: '123456')
+		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', spotify: false, song: nil, google: false, password: '123456')
+		@userspotify = User.create!(name: 'spotiUser', email: 'spotiuser@mail.com', spotify: true, song: nil, google: false, password: '123456', spotify_username:'spotiuser')
 	end
 	
 	it "has a name" do
@@ -14,10 +14,6 @@ RSpec.describe User do
 	it "has a email" do
 		# Verifico che l'utente sia stato correttamente creato con l'esatta email che ho passato.
 		expect(@user.email).to eq('ut@mail.com')
-	end
-	it "has a photo" do
-		# Verifico che l'utente sia stato correttamente creato con l'esatta foto che ho passato.
-		expect(@user.photo).to eq(1)
 	end
 	it "has not spotify" do
 		# Verifico che l'utente sia stato correttamente creato senza l'utilizzo di spotify.

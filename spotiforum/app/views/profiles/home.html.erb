@@ -1,4 +1,14 @@
-
+<% content_for :custom_styles do %>
+	<style>
+	body{
+		background-image: url('<%= image_path("green_background.jpg") %>');
+		background-size: 60%;
+		background-repeat: no-repeat;
+		background-position: center 75px;
+    background-attachment: fixed; 
+	}
+	</style>
+<%end%>
 <% if @user.image.attached? %>
   <%= image_tag(@user.image, class: 'profile-image') %>
 <% else %>
@@ -44,8 +54,8 @@
   
   <!--playlist consigliata con collapse bootstrap-->
   <h3> La playlist che ti abbiamo consigliato </h3>
-  <%RSpotify.authenticate("d654966e96084bcdb7ec9a296fa0b0a1", "f271efc1b16c404f9ee71c318baa581a") 
-    user = RSpotify::User.find(session[:spotify_access_token]["uid"])  # Sostituisci 'username' con il nome utente Spotify desiderato
+  <%RSpotify.authenticate(Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret))
+    user = RSpotify::User.find(@user.spotify_username)  # Sostituisci 'username' con il nome utente Spotify desiderato
     playlist_list = user.playlists
 
     playlist_list.each do |playlist|
@@ -72,9 +82,44 @@
     <%else%>
     <%= "Non hai ancora creato questa playlist"%>
     <%end%>
-</div>
 
-<%end %>
+    <br>
+    <br>
+    
+    <!--playlist con canzoni scelte da me creata con collapse bootstrap-->
+    <h3> La playlist che ho creato </h3>
+    <%RSpotify.authenticate(Rails.application.credentials.dig(:spotify_oauth_client_id), Rails.application.credentials.dig(:spotify_oauth_client_secret))
+      user2 = RSpotify::User.find(@user.spotify_username)  # Sostituisci 'username' con il nome utente Spotify desiderato
+      playlist_list2 = user2.playlists
+
+      playlist_list2.each do |playlist2|
+        if playlist2.name == "Your Spotiforum Playlist!"
+          @spotiforum2 = playlist2
+        end
+      end
+      
+      if @spotiforum2 != nil %>
+      <%  songs2 = @spotiforum2.tracks%>
+      <div class="card posts_container">
+      <%  songs2.each do |song2| %>
+          <p data-toggle="collapse" href="#collapse2<%= song2.id%>" role="button" aria-expanded="false" aria-controls="collapse2<%= song2.id%>">
+            <%=  "#{song2.name}" %>
+          </p>
+          <div class="collapse" id="collapse2<%= song2.id%>" style="padding-left: 75px;"> 
+              <p> <%=  "Artista: #{song2.artists[0].name}" %> </p>
+              <p> <%=  "Album: #{song2.album.name}" %> </p>
+              <p> <%=  "Durata: #{song2.duration_ms} ms" %> </p>
+          </div>
+        <hr style="border-color: rgba(28, 126, 28, 0.479);">
+      <%  end %>
+      </div>
+      <%else%>
+      <%= "Non hai ancora creato questa playlist"%>
+      <%end%>
+    </div>
+  
+
+<%end %> 
 
 <br>
 <br>
@@ -104,6 +149,6 @@
       <div class="col-sm-2">
         <%= image_tag "comment.svg", class: "btn_for_user" %>
       </div>
-      </div>
+    </div>
   </div>
 <%end%>

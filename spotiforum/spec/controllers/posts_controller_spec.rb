@@ -8,8 +8,8 @@ RSpec.describe PostsController, type: :controller do
 		# 2 utenti diversi, non mi interessano dei valori significativi ma devo rispettare i vincoli
 		# delle validazioni.
 		before do
-			@user1 = User.create!(name: 'Jake', email: 'j@mail.com', photo: 1, spotify: false, song: nil, google: false, password: '123456')
-			@user2 = User.create!(name: 'Lisa', email: 'l@mail.com', photo: 1, spotify: false, song: nil, google: false, password: '123456')
+			@user1 = User.create!(name: 'Jake', email: 'j@mail.com', spotify: false, song: nil, google: false, password: '123456')
+			@user2 = User.create!(name: 'Lisa', email: 'l@mail.com', spotify: false, song: nil, google: false, password: '123456')
 			# 3 post creati in istanti di tempo diversi, 2 dal primo utente, 1 dal secondo utente.
 			@post1 = Post.create!(content: 'Post 1', user_id: @user1.id, tag: '#1', created_at: 4.days.ago)
 			@post2 = Post.create!(content: 'Post 2', user_id: @user1.id, tag: '#2', created_at: 2.days.ago)
