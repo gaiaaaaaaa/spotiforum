@@ -71,7 +71,7 @@ RSpec.describe PostsController, type: :controller do
 			# nella tabella dei preferiti e hanno come user_id l'utente attuale.
 			# Simulo il current_user user1 e faccio in modo che egli abbia 2 post preferiti.
 			get :index, params: { filter_favourite: 1 }
-			expect(controller.instance_variable_get(:@posts)).to eq([@post1, @post3])
+			expect(controller.instance_variable_get(:@posts)).to eq([@post3, @post1])
 		end
 	end
 end

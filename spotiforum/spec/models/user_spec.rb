@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe User do
 	# Creo un utente perché voglio testare che venga creato correttamente.
 	before do
-		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', spotify: false, song: nil, google: false, password: '123456')
-		@userspotify = User.create!(name: 'spotiUser', email: 'spotiuser@mail.com', spotify: true, song: nil, google: false, password: '123456', spotify_username:'spotiuser')
+		@user = User.create!(name: 'UserTest', email: 'ut@mail.com', spotify: false, google: false, password: '123456')
+		@userspotify = User.create!(name: 'spotiUser', email: 'spotiuser@mail.com', spotify: true, google: false, password: '123456', spotify_username:'spotiuser')
 	end
 	
 	it "has a name" do
@@ -19,9 +19,17 @@ RSpec.describe User do
 		# Verifico che l'utente sia stato correttamente creato senza l'utilizzo di spotify.
 		expect(@user.spotify).to eq(false)
 	end
-	it "has a song" do
+	it "has not a song" do
 		# Verifico che l'utente sia stato correttamente creato senza una canzone preferita.
 		expect(@user.song).to eq(nil)
+	end
+	it "has not a most listened song" do
+		# Verifico che l'utente sia stato correttamente creato senza una canzone preferita.
+		expect(@user.mostlistenedsong).to eq(nil)
+	end
+	it "has not a most listened artist" do
+		# Verifico che l'utente sia stato correttamente creato senza una canzone preferita.
+		expect(@user.mostlistenedartist).to eq(nil)
 	end
 	it "has not google" do
 		# Verifico che l'utente sia stato correttamente creato senza l'utilizzo di google.

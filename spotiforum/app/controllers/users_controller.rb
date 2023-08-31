@@ -12,8 +12,13 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+	if !user_signed_in?
+		redirect_to root_path
+		return
+	end
     if current_user.id != params[:id].to_i
       redirect_to root_path
+      return
     end
     #rendo disponibili post, like e commenti alla view di show (area personale)
     @posts = Post.all.where(user_id: current_user.id)
