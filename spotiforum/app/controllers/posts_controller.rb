@@ -19,6 +19,8 @@ class PostsController < ApplicationController
                 .group('posts.id')
                 .order('COUNT(comments.id) DESC')
       end
+    else
+		base = base.order(created_at: :desc)
     end
     if (params[:filter_favourite] != nil)
 		  base = base.joins(:favourites).where(favourites: {user_id: current_user.id})

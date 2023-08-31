@@ -4,6 +4,12 @@ class VincoloCanzone < ActiveModel::Validator
         if !(record.spotify == true or record.song == nil)
             record.errors.add :base, "Non puoi scegliere una canzone preferita se non hai fatto login con Spotify!"
         end
+        if !(record.spotify == true or record.mostlistenedsong == nil)
+            record.errors.add :base, "Non puoi scegliere una canzone più ascoltata se non hai fatto login con Spotify!"
+        end
+        if !(record.spotify == true or record.mostlistenedartist == nil)
+            record.errors.add :base, "Non puoi scegliere un artista più ascoltato se non hai fatto login con Spotify!"
+        end
     end
 end
 
